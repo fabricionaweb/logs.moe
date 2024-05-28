@@ -5,4 +5,5 @@ export type Data = {
   contentType: string;
 };
 
+await Deno.mkdir(DATA_DIR, { recursive: true, mode: 0o755 });
 export const kv = await Deno.openKv(`${DATA_DIR}/kv.db`);

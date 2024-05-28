@@ -5,7 +5,7 @@ yarn-error.log*
 
 .env
 *.db*
-data/*
+data/
 
 !.tool-versions
 !.gitkeep

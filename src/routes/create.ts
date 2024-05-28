@@ -1,12 +1,10 @@
 import { Middleware, Status } from "oak";
-import { FILES_DIR, MAX_REQUEST_SIZE } from "../constants.ts";
+import { BASE_URL, FILES_DIR, MAX_REQUEST_SIZE } from "../constants.ts";
 import { randomUUID } from "../utils/uuid.ts";
 import { encrypt } from "../utils/encrypt.ts";
 import { Data, kv } from "../database.ts";
 
 export const create: Middleware = async (ctx) => {
-  const baseUrl = Deno.env.get("BASE_URL");
-
   // api will only work with form-data
   if (ctx.request.body.type() !== "form-data") {
     return ctx.throw(Status.BadRequest);
@@ -54,5 +52,5 @@ export const create: Middleware = async (ctx) => {
   ]);
 
   ctx.response.status = Status.Created;
-  ctx.response.body = `${baseUrl}/${uuid}#${k}`;
+  ctx.response.body = `${BASE_URL}/${uuid}#${k}`;
 };

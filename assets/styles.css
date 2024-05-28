@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200&display=swap");
+
+html {
+  background: black;
+  color: white;
+  font-size: 13px;
+}
+
+body {
+  font: 200 1em/1.4 "JetBrains Mono", monospace;
+  white-space: pre;
+}
+
+@media screen and (prefers-color-scheme: light) {
+  body {
+    background-color: white;
+    color: black;
+  }
+}
+
+a {
+  color: magenta;
+}
+
+pre {
+  display: inline;
+  color: grey;
+}

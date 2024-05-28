@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>logs.moe</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>Share encrypted logs without leaving terminal
+
+from file
+  <pre>$ curl https://logs.moe -F data=@debug.log</pre>
+from stdin
+  <pre>$ cat debug.log | curl https://logs.moe -F data=@-</pre>
+
+- Only accepts form-data and field name "data"
+- Upload size limited to 20MiB
+- Anything is deleted in 7 days
+- Everything is encrypted
+- Decryption happens on browser
+
+This is a personal project and nothing is collected
+
+Inspiration .............. <a href="https://x0.at" rel="noreferrer">https://x0.at</a> | <a href="https://0bin.net" rel="noreferrer">https://0bin.net</a>
+Source ........ <a href="https://codeberg.org/fabricionaweb/logs.moe" rel="noreferrer">https://codeberg.org/fabricionaweb/logs.moe</a></body>
+</html>

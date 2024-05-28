@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>logs.moe</title>
+<link rel="stylesheet" href="/styles.css" />
+<script type="module">
+import { decrypt } from "/libs/subtle.mjs";
+
+;(async function () {
+  const contentType = "<%= contentType %>";
+  const iv = new Uint8Array([<%= iv %>]);
+  const k = location.hash.slice(1);
+  const uuid = location.pathname.slice(1);
+  const element = document.createElement("div");
+
+  try {
+    const response = await fetch(`/data/${uuid}`);
+    const encrypted = await response.arrayBuffer();
+    const buffer = await decrypt(iv, k, encrypted);
+
+    if (contentType.startsWith("image/")) {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(new Blob([buffer]));
+      element.appendChild(img);
+    } else {
+      element.textContent = new TextDecoder().decode(buffer);
+    }
+  } catch (err) {
+    console.error({ err });
+  } finally {
+    if (!element.childNodes.length) {
+      element.textContent = "failed :("
+    }
+
+    document.body.innerHTML = "";
+    document.body.appendChild(element);
+  }
+})();
+</script>
+</head>
+<body>working...</body>
+</html>

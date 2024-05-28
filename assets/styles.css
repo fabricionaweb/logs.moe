@@ -1,28 +1,44 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200&display=swap");
 
+:root {
+  --black: #181820;
+  --white: #fff2f9;
+  --pink: #fa4eab;
+  --grey: #837c80;
+}
+
 html {
-  background: black;
-  color: white;
+  background-color: var(--black);
+  color: var(--white);
   font-size: 13px;
 }
 
-body {
+body,
+pre {
   font: 200 1em/1.4 "JetBrains Mono", monospace;
+}
+
+body {
   white-space: pre;
 }
 
 @media screen and (prefers-color-scheme: light) {
   body {
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
   }
 }
 
 a {
-  color: magenta;
+  color: var(--pink);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 pre {
   display: inline;
-  color: grey;
+  color: var(--grey);
 }

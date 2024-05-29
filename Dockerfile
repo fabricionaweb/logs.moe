@@ -1,8 +1,9 @@
 FROM denoland/deno:alpine-1.43.6
 
-USER deno
-WORKDIR /app
+RUN apk add --no-cache tzdata
 
+USER 1000:1000
+WORKDIR /app
 COPY assets ./assets
 COPY src ./src
 COPY deno.json deno.lock main.ts ./

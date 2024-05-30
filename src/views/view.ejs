@@ -3,16 +3,19 @@
 <head>
 <title>logs.moe</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
 <link rel="stylesheet" href="/styles.css" />
 <script type="module">
+import hljs from "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/highlight.min.js";
 import { decrypt } from "/libs/subtle.mjs";
 
 ;(async function () {
   const contentType = "<%= contentType %>";
   const iv = new Uint8Array([<%= iv %>]);
-  const k = location.hash.slice(1);
+  const [k, language] = location.hash.slice(1).split(".");
   const uuid = location.pathname.slice(1);
-  const element = document.createElement("div");
+  const element = document.createElement("pre");
+  let child;
 
   try {
     const response = await fetch(`/data/${uuid}`);
@@ -20,21 +23,28 @@ import { decrypt } from "/libs/subtle.mjs";
     const buffer = await decrypt(iv, k, encrypted);
 
     if (contentType.startsWith("image/")) {
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(new Blob([buffer]));
-      element.appendChild(img);
+      child = document.createElement("img");
+      child.src = URL.createObjectURL(new Blob([buffer]));
     } else {
-      element.textContent = new TextDecoder().decode(buffer);
+      child = document.createElement("code");
+      child.textContent = new TextDecoder().decode(buffer);
     }
+
+    element.appendChild(child)
   } catch (err) {
-    console.error({ err });
+    console.error(err);
   } finally {
     if (!element.childNodes.length) {
-      element.textContent = "failed :("
+      element.textContent = "failed :(";
     }
 
     document.body.innerHTML = "";
     document.body.appendChild(element);
+
+    if (language) {
+      hljs.configure({ languages: [language] });
+    }
+    hljs.highlightAll();
   }
 })();
 </script>

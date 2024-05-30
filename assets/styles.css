@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;400&display=swap");
 
 :root {
   --black: #282935;
@@ -20,10 +20,6 @@ samp {
   font: 200 1em/1.4 "JetBrains Mono", monospace;
 }
 
-body {
-  white-space: pre;
-}
-
 @media screen and (prefers-color-scheme: light) {
   body {
     background-color: var(--white);
@@ -41,4 +37,20 @@ samp {
 
 pre {
   margin: 0;
+}
+
+/* overrides to highlight.js */
+pre code.hljs {
+  background: transparent;
+  padding: 0;
+}
+
+.hljs-emphasis,
+.hljs-comment,
+.hljs-quote {
+  font-style: normal;
+}
+
+.hljs-strong {
+  font-weight: 400;
 }

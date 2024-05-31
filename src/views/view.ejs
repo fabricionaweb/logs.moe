@@ -37,7 +37,9 @@ import { decrypt } from "/libs/subtle.mjs";
     document.body.innerHTML = "";
     document.body.appendChild(element);
 
-    hljs.configure({ languages: [language] });
+    if (language) {
+      hljs.configure({ languages: [language] });
+    }
     hljs.highlightAll();
   }
 })();

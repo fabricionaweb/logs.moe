@@ -13,10 +13,10 @@ import { decrypt } from "/libs/subtle.mjs";
 ;(async function () {
   const contentType = "<%= contentType %>";
   const iv = new Uint8Array([<%= iv %>]);
-  const [k, language] = location.hash.slice(1).split(".");
   const uuid = location.pathname.slice(1);
+  const [k, language] = location.hash.slice(1).split(".");
   const element = document.createElement("pre");
-  let child;
+  let child = document.createElement("code");
 
   try {
     const response = await fetch(`/data/${uuid}`);
@@ -27,28 +27,21 @@ import { decrypt } from "/libs/subtle.mjs";
       child = document.createElement("img");
       child.src = URL.createObjectURL(new Blob([buffer]));
     } else {
-      child = document.createElement("code");
-      child.textContent = new TextDecoder().decode(buffer);
+      child.textContent = new TextDecoder().decode(buffer) || "empty 👀";
     }
-
-    element.appendChild(child)
   } catch (err) {
     console.error(err);
+    child.textContent = "failed 💀";
   } finally {
-    if (!element.childNodes.length) {
-      element.textContent = "failed :(";
-    }
-
+    element.appendChild(child)
     document.body.innerHTML = "";
     document.body.appendChild(element);
 
-    if (language) {
-      hljs.configure({ languages: [language] });
-    }
+    hljs.configure({ languages: [language] });
     hljs.highlightAll();
   }
 })();
 </script>
 </head>
-<body><pre><code>⏳</code></pre></body>
+<body><pre><code>working ⏳</code></pre></body>
 </html>

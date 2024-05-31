@@ -52,5 +52,5 @@ export const create: Middleware = async (ctx) => {
   ]);
 
   ctx.response.status = Status.Created;
-  ctx.response.body = `${BASE_URL}/${uuid}#${k}`;
+  ctx.response.body = `${BASE_URL}/${uuid}#${k}\n`;
 };

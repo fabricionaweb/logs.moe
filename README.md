@@ -4,8 +4,6 @@ Share encrypted logs without leaving terminal.
 
 This is _yet_ another pastebin alternative. Working as side project, I want to test an idea using [SubtleCrypto](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) API. Made using Deno to have everything (or almost) built-in was also fun.
 
-Goal are clean and objective. There is no color highlight or anything else _yet_.
-
 ## How it works
 
 To create:
@@ -34,6 +32,6 @@ To retrieve:
 
 To clean:
 
-1. Using [Deno CRON](https://docs.deno.com/deploy/kv/manual/cron), it periodically (every midnight) iterates over the encrypted files seeking for files that have exceed time to living (7d).
+1. Using [Deno cron](https://docs.deno.com/deploy/kv/manual/cron), it periodically (every midnight) iterates over the encrypted files seeking for files that have exceed time to living (7d).
 
 1. Delete the files and remove from KV.

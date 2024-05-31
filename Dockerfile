@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine-1.43.6
+FROM denoland/deno:alpine-1.44.0
 
 RUN apk add --no-cache tzdata
 

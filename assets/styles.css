@@ -50,6 +50,11 @@ a {
   color: var(--blue);
 }
 
+img {
+  width: 100%;
+  max-width: max-content;
+}
+
 /* overrides to highlight.js */
 pre code.hljs {
   background: transparent;

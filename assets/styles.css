@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400&display=swap");
 
 :root {
   --black: #282935;
@@ -7,42 +7,52 @@
   --grey: #5c6370;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html {
-  background-color: var(--black);
+  background: var(--black);
   color: var(--white);
-  font-size: 13px;
+  font-size: 10px;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body,
 code,
 pre,
 samp {
-  font: 200 1em/1.4 "JetBrains Mono", monospace;
+  font: 100 1.3rem/1.5 "JetBrains Mono", monospace;
 }
 
-@media screen and (prefers-color-scheme: light) {
-  body {
-    background-color: var(--white);
-    color: var(--black);
-  }
+code {
+  display: block;
+  padding: 1rem;
+  min-height: 100vh;
+  overflow-x: auto;
+}
+
+samp {
+  display: inline-block;
+  white-space: pre-line;
+  color: var(--grey);
 }
 
 a {
   color: var(--blue);
 }
 
-samp {
-  color: var(--grey);
-}
-
-pre {
-  margin: 0;
-}
-
 /* overrides to highlight.js */
 pre code.hljs {
   background: transparent;
-  padding: 0;
 }
 
 .hljs-emphasis,

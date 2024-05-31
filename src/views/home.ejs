@@ -3,15 +3,19 @@
 <head>
 <title>logs.moe</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📃</text></svg>"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📃</text></svg>" />
 <link rel="stylesheet" href="/styles.css" />
 </head>
-<body><pre>Share encrypted logs without leaving terminal
+<body><pre><code>Share encrypted logs without leaving terminal
 
 from file
   <samp>$ curl https://logs.moe -F data=@debug.log</samp>
 from stdin
   <samp>$ cat debug.log | curl https://logs.moe -F data=@-</samp>
+alias (file or stdin)
+  <samp>logsmoe() { curl https://logs.moe -F data="@${1:--}"; }
+  $ logsmoe debug.log
+  $ git diff --staged | logsmoe</samp>
 
 - Only accepts form-data and field name "data"
 - Upload size limited to 20MiB
@@ -22,5 +26,5 @@ from stdin
 This is a personal project and nothing is collected
 
 Inspiration ......... <a href="https://x0.at" rel="noreferrer">https://x0.at</a> | <a href="https://0bin.net/faq/" rel="noreferrer">https://0bin.net/faq/</a>
-Source ........ <a href="https://codeberg.org/fabricionaweb/logs.moe" rel="noreferrer">https://codeberg.org/fabricionaweb/logs.moe</a></pre></body>
+Source ........ <a href="https://codeberg.org/fabricionaweb/logs.moe" rel="noreferrer">https://codeberg.org/fabricionaweb/logs.moe</a></code></pre></body>
 </html>

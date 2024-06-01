@@ -27,6 +27,7 @@ export const init = async (contentType, iv) => {
   } catch (err) {
     console.error(err);
     childElement.textContent = "failed 💀";
+    return;
   } finally {
     preElement.appendChild(childElement);
     document.body.innerHTML = "";

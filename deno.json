@@ -1,16 +1,7 @@
 {
   "tasks": {
     "dev": "deno run --reload --watch --unstable-kv --unstable-cron --allow-net --allow-env --allow-write --allow-read main.ts",
-    "start": "deno run --unstable-kv --unstable-cron --allow-net --allow-env --allow-write --allow-read main.ts",
-    "compile": "deno compile --unstable-kv --unstable-cron --allow-net --allow-env --allow-write --allow-read main.ts"
-  },
-  "imports": {
-    "path": "https://deno.land/std@0.224.0/path/mod.ts",
-    "log": "https://deno.land/std@0.224.0/log/mod.ts",
-    "dotenv": "https://deno.land/std@0.224.0/dotenv/mod.ts",
-    "oak": "https://deno.land/x/oak@v16.0.0/mod.ts",
-    "dejs": "https://deno.land/x/dejs@0.10.3/mod.ts",
-    "deno-dom": "https://deno.land/x/deno_dom@v0.1.45/deno-dom-wasm.ts",
-    "short-unique-id": "https://esm.sh/short-unique-id@5.2.0"
+    "start": "deno run --lock --cached-only --unstable-kv --unstable-cron --allow-net --allow-env --allow-write --allow-read main.ts",
+    "cache": "deno cache deps.ts --lock --lock-write"
   }
 }

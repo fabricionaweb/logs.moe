@@ -1,9 +1,8 @@
-import { RouterMiddleware, Status } from "oak";
-import { renderFileToString } from "dejs";
+import { dejs, oak } from "../../deps.ts";
 import { Data, kv } from "../database.ts";
 import { FILES_DIR, VIEWS_DIR } from "../constants.ts";
 
-export const view: RouterMiddleware<"/:uuid", { uuid: string }> = async (
+export const view: oak.RouterMiddleware<"/:uuid", { uuid: string }> = async (
   ctx,
   next,
 ) => {
@@ -17,26 +16,30 @@ export const view: RouterMiddleware<"/:uuid", { uuid: string }> = async (
 
   // curl client
   if (noBrowser) {
-    ctx.response.status = Status.NotImplemented;
+    ctx.response.status = oak.Status.NotImplemented;
     ctx.response.body = "Can only decrypt it on browsers";
     return;
   }
 
   // a request to "/data/:uuid" will be done on the view.ejs to get the encrypted blob
   // it will there use "utils/decrypt.ts" to decode
-  ctx.response.body = await renderFileToString(`${VIEWS_DIR}/view.ejs`, value);
+  ctx.response.body = await dejs.renderFileToString(
+    `${VIEWS_DIR}/view.ejs`,
+    value,
+  );
 };
 
-export const data: RouterMiddleware<"/data/:uuid", { uuid: string }> = async (
-  ctx,
-) => {
-  // just serve binary files (if it exists)
-  try {
-    await ctx.send({
-      root: FILES_DIR,
-      path: `${ctx.params.uuid}.bin`,
-    });
-  } catch {
-    return ctx.throw(Status.NotFound);
-  }
-};
+export const data: oak.RouterMiddleware<"/data/:uuid", { uuid: string }> =
+  async (
+    ctx,
+  ) => {
+    // just serve binary files (if it exists)
+    try {
+      await ctx.send({
+        root: FILES_DIR,
+        path: `${ctx.params.uuid}.bin`,
+      });
+    } catch {
+      return ctx.throw(oak.Status.NotFound);
+    }
+  };

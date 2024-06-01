@@ -1,6 +1,6 @@
-import { Middleware } from "oak";
+import { oak } from "../../deps.ts";
 
-export const headers: Middleware = async (ctx, next) => {
+export const headers: oak.Middleware = async (ctx, next) => {
   const start = Date.now();
 
   try {

@@ -1,18 +1,16 @@
-import { RouterMiddleware } from "oak";
-import { renderFileToString } from "dejs";
-import { DOMParser } from "deno-dom";
+import { dejs, denoDom, oak } from "../../deps.ts";
 import { VIEWS_DIR } from "../constants.ts";
 
-export const home: RouterMiddleware<"/"> = async (
+export const home: oak.RouterMiddleware<"/"> = async (
   ctx,
 ) => {
   const noBrowser = !ctx.request.userAgent.browser.name;
-  const html = await renderFileToString(`${VIEWS_DIR}/home.ejs`, {});
+  const html = await dejs.renderFileToString(`${VIEWS_DIR}/home.ejs`, {});
   let textContent;
 
   // curl client
   if (noBrowser) {
-    const document = new DOMParser().parseFromString(html, "text/html");
+    const document = new denoDom.DOMParser().parseFromString(html, "text/html");
     textContent = document?.body.textContent;
   }
 

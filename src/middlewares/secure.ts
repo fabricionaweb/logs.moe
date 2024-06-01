@@ -1,11 +1,11 @@
-import { Middleware, Status } from "oak";
+import { oak } from "../../deps.ts";
 
 // if not set it will just bypass
-export const secure: Middleware = async (ctx, next) => {
+export const secure: oak.Middleware = async (ctx, next) => {
   const key = Deno.env.get("KEY");
 
   if (key && ctx.request.headers.get("x-key") !== key) {
-    return ctx.throw(Status.Unauthorized);
+    return ctx.throw(oak.Status.Unauthorized);
   }
 
   await next();

@@ -1,8 +1,8 @@
-import { Router } from "oak";
+import { oak } from "../deps.ts";
 import * as middlewares from "./middlewares/index.ts";
 import * as routes from "./routes/index.ts";
 
-export const router = new Router();
+export const router = new oak.Router();
 
 // returns the encrypted content as binary
 router.get("/data/:uuid", routes.data);

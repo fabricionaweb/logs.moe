@@ -1,13 +1,12 @@
-import * as log from "log";
-import { Middleware, Status } from "oak";
+import { log, oak } from "../../deps.ts";
 
-export const logs: Middleware = async (ctx, next) => {
+export const logs: oak.Middleware = async (ctx, next) => {
   const noBrowser = !ctx.request.userAgent.browser.name;
   let error;
 
   try {
     await next();
-  } catch ({ status = Status.InternalServerError, message }) {
+  } catch ({ status = oak.Status.InternalServerError, message }) {
     error = `${status}: ${message}`;
 
     ctx.response.status = status;

@@ -1,5 +1,4 @@
-import * as log from "log";
-import * as path from "path";
+import { log, path } from "../../deps.ts";
 import { FILE_TTL, FILES_DIR } from "../constants.ts";
 import { kv } from "../database.ts";
 

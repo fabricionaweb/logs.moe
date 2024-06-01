@@ -1,18 +1,18 @@
-import { Middleware, Status } from "oak";
+import { oak } from "../../deps.ts";
 import { BASE_URL, FILES_DIR, MAX_REQUEST_SIZE } from "../constants.ts";
 import { randomUUID } from "../utils/uuid.ts";
 import { encrypt } from "../utils/encrypt.ts";
 import { Data, kv } from "../database.ts";
 
-export const create: Middleware = async (ctx) => {
+export const create: oak.Middleware = async (ctx) => {
   // api will only work with form-data
   if (ctx.request.body.type() !== "form-data") {
-    return ctx.throw(Status.BadRequest);
+    return ctx.throw(oak.Status.BadRequest);
   }
 
   // limit request size
   if (Number(ctx.request.headers.get("content-length")) > MAX_REQUEST_SIZE) {
-    return ctx.throw(Status.RequestEntityTooLarge);
+    return ctx.throw(oak.Status.RequestEntityTooLarge);
   }
 
   const reader = await ctx.request.body.formData();
@@ -33,7 +33,7 @@ export const create: Middleware = async (ctx) => {
 
   // not get any content somehow
   if (!content) {
-    return ctx.throw(Status.UnprocessableEntity);
+    return ctx.throw(oak.Status.UnprocessableEntity);
   }
 
   const { iv, k, encrypted } = await encrypt(content);
@@ -51,6 +51,6 @@ export const create: Middleware = async (ctx) => {
     ),
   ]);
 
-  ctx.response.status = Status.Created;
+  ctx.response.status = oak.Status.Created;
   ctx.response.body = `${BASE_URL}/${uuid}#${k}\n`;
 };

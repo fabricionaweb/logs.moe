@@ -15,8 +15,8 @@ import { decrypt } from "/libs/subtle.mjs";
   const iv = new Uint8Array([<%= iv %>]);
   const uuid = location.pathname.slice(1);
   const [k, language] = location.hash.slice(1).split(".");
-  const element = document.createElement("pre");
-  let child = document.createElement("code");
+  const preElement = document.createElement("pre");
+  let childElement = document.createElement("code");
 
   try {
     const response = await fetch(`/data/${uuid}`);
@@ -24,23 +24,34 @@ import { decrypt } from "/libs/subtle.mjs";
     const buffer = await decrypt(iv, k, encrypted);
 
     if (contentType.startsWith("image/")) {
-      child = document.createElement("img");
-      child.src = URL.createObjectURL(new Blob([buffer]));
+      childElement = document.createElement("img");
+      childElement.src = URL.createObjectURL(new Blob([buffer]));
     } else {
-      child.textContent = new TextDecoder().decode(buffer) || "empty 👀";
+      childElement.textContent = new TextDecoder().decode(buffer) || "empty 👀";
     }
   } catch (err) {
     console.error(err);
-    child.textContent = "failed 💀";
+    childElement.textContent = "failed 💀";
   } finally {
-    element.appendChild(child)
+    preElement.appendChild(childElement)
     document.body.innerHTML = "";
-    document.body.appendChild(element);
+    document.body.appendChild(preElement);
 
-    if (language) {
+    if (childElement.tagName.toLowerCase() !== "code")
+      return;
+
+    if (language)
       hljs.configure({ languages: [language] });
-    }
-    hljs.highlightAll();
+
+    if (childElement.textContent.length < 1_000_000)
+      hljs.highlightAll();
+
+    // line numbers
+    const totalLines = childElement.getClientRects()[0].height / parseFloat(getComputedStyle(childElement).lineHeight);
+    const linesElement = document.createElement("ol");
+    for (let i = 1; i < parseInt(totalLines); i++)
+      linesElement.appendChild(document.createElement("li"));
+    preElement.insertBefore(linesElement, preElement.firstChild);
   }
 })();
 </script>

@@ -36,7 +36,6 @@ samp {
 code {
   display: block;
   padding: 1rem;
-  min-height: 100vh;
   overflow-x: auto;
 }
 
@@ -55,8 +54,26 @@ img {
   max-width: max-content;
 }
 
+/* lines count */
+pre > ol {
+  float: left;
+  padding: 1rem;
+  opacity: 0.3;
+  list-style: none;
+  text-align: right;
+}
+
+pre > ol li {
+  counter-increment: line-number;
+}
+
+pre > ol li::before {
+  content: counter(line-number);
+}
+
 /* overrides to highlight.js */
 pre code.hljs {
+  padding: 1rem;
   background: transparent;
 }
 

@@ -6,54 +6,10 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📃</text></svg>" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
 <link rel="stylesheet" href="/styles.css" />
+<script type="module" src="/main.mjs"></script>
 <script type="module">
-import hljs from "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/highlight.min.js";
-import { decrypt } from "/libs/subtle.mjs";
-
-;(async function () {
-  const contentType = "<%= contentType %>";
-  const iv = new Uint8Array([<%= iv %>]);
-  const uuid = location.pathname.slice(1);
-  const [k, language] = location.hash.slice(1).split(".");
-  const preElement = document.createElement("pre");
-  let childElement = document.createElement("code");
-
-  try {
-    const response = await fetch(`/data/${uuid}`);
-    const encrypted = await response.arrayBuffer();
-    const buffer = await decrypt(iv, k, encrypted);
-
-    if (contentType.startsWith("image/")) {
-      childElement = document.createElement("img");
-      childElement.src = URL.createObjectURL(new Blob([buffer]));
-    } else {
-      childElement.textContent = new TextDecoder().decode(buffer) || "empty 👀";
-    }
-  } catch (err) {
-    console.error(err);
-    childElement.textContent = "failed 💀";
-  } finally {
-    preElement.appendChild(childElement)
-    document.body.innerHTML = "";
-    document.body.appendChild(preElement);
-
-    if (childElement.tagName.toLowerCase() !== "code")
-      return;
-
-    if (language)
-      hljs.configure({ languages: [language] });
-
-    if (childElement.textContent.length < 1_000_000)
-      hljs.highlightAll();
-
-    // line numbers
-    const totalLines = childElement.getClientRects()[0].height / parseFloat(getComputedStyle(childElement).lineHeight);
-    const linesElement = document.createElement("ol");
-    for (let i = 1; i < parseInt(totalLines); i++)
-      linesElement.appendChild(document.createElement("li"));
-    preElement.insertBefore(linesElement, preElement.firstChild);
-  }
-})();
+import { init } from "/main.mjs";
+init("<%= contentType %>", new Uint8Array([<%= iv %>]));
 </script>
 </head>
 <body><pre><code>working ⏳</code></pre></body>

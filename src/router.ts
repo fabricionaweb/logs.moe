@@ -4,9 +4,6 @@ import * as routes from "./routes/index.ts";
 
 export const router = new Router();
 
-// transpile utils/decrypt.ts to use on front-end
-router.get("/libs/subtle.mjs", routes.subtle);
-
 // returns the encrypted content as binary
 router.get("/data/:uuid", routes.data);
 

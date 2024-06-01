@@ -9,7 +9,6 @@
     "log": "https://deno.land/std@0.224.0/log/mod.ts",
     "dotenv": "https://deno.land/std@0.224.0/dotenv/mod.ts",
     "oak": "https://deno.land/x/oak@v16.0.0/mod.ts",
-    "emit": "https://deno.land/x/emit@0.40.0/mod.ts",
     "dejs": "https://deno.land/x/dejs@0.10.3/mod.ts",
     "deno-dom": "https://deno.land/x/deno_dom@v0.1.45/deno-dom-wasm.ts",
     "short-unique-id": "https://esm.sh/short-unique-id@5.2.0"

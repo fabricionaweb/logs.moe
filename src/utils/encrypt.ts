@@ -1,5 +1,9 @@
-// keep vars on decrypt.ts to be used on the frontend as well
-import { ALGORITHM, ALGORITHM_PARAMS, KEY_USAGE } from "./decrypt.ts";
+// keep on frontend as its needed to decrypt
+import {
+  ALGORITHM,
+  ALGORITHM_PARAMS,
+  KEY_USAGE,
+} from "../../assets/subtle.mjs";
 
 export const encrypt = async (decrypted: Uint8Array) => {
   const iv = crypto.getRandomValues(new Uint8Array(16));

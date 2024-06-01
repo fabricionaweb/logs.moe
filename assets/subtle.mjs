@@ -1,22 +1,27 @@
-// this file is also transpiled to "/libs/subtle.mjs"
-export const KEY_USAGE = ["encrypt", "decrypt"] as KeyUsage[];
+/** @type {KeyUsage[]} */
+export const KEY_USAGE = ["encrypt", "decrypt"];
 export const ALGORITHM = "AES-GCM";
 
+/** @type {AesKeyGenParams} */
 export const ALGORITHM_PARAMS = {
   name: ALGORITHM,
   length: 256,
-} as AesKeyGenParams;
+};
+
+/** @type {JsonWebKey} */
 export const JWT_PARAMS = {
   kty: "oct",
   alg: "A256GCM",
   ext: true,
-} as JsonWebKey;
+};
 
-export const decrypt = async (
-  iv: Uint8Array,
-  k: string,
-  encrypted: ArrayBuffer,
-) => {
+/**
+ * @param  {Uint8Array}  iv
+ * @param  {string}      k
+ * @param  {ArrayBuffer} encrypted
+ * @return {Promise<ArrayBuffer>}
+ */
+export const decrypt = async (iv, k, encrypted) => {
   const key = await crypto.subtle.importKey(
     "jwk",
     { k, ...JWT_PARAMS },

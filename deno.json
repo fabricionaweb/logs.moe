@@ -3,5 +3,9 @@
     "dev": "deno run --reload --watch --unstable-kv --unstable-cron --allow-net --allow-env --allow-write --allow-read main.ts",
     "start": "deno run --lock --cached-only --unstable-kv --unstable-cron --allow-net --allow-env --allow-write --allow-read main.ts",
     "cache": "deno cache deps.ts --lock --lock-write"
+  },
+  "fmt": {
+    "lineWidth": 120,
+    "semiColons": false
   }
 }

@@ -1,3 +1,3 @@
-import { ShortUniqueId } from "../../deps.ts";
+import { ShortUniqueId } from "../../deps.ts"
 
-export const { randomUUID } = new ShortUniqueId();
+export const { randomUUID } = new ShortUniqueId()

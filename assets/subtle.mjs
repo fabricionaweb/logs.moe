@@ -1,19 +1,19 @@
 /** @type {KeyUsage[]} */
-export const KEY_USAGE = ["encrypt", "decrypt"];
-export const ALGORITHM = "AES-GCM";
+export const KEY_USAGE = ["encrypt", "decrypt"]
+export const ALGORITHM = "AES-GCM"
 
 /** @type {AesKeyGenParams} */
 export const ALGORITHM_PARAMS = {
   name: ALGORITHM,
   length: 256,
-};
+}
 
 /** @type {JsonWebKey} */
 export const JWT_PARAMS = {
   kty: "oct",
   alg: "A256GCM",
   ext: true,
-};
+}
 
 /**
  * @param  {Uint8Array}  iv
@@ -28,11 +28,11 @@ export const decrypt = async (iv, k, encrypted) => {
     ALGORITHM_PARAMS,
     true,
     KEY_USAGE,
-  );
+  )
 
   return await crypto.subtle.decrypt(
     { name: ALGORITHM, iv },
     key,
     encrypted,
-  );
-};
+  )
+}

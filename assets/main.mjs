@@ -8,10 +8,10 @@ import { decrypt } from "./subtle.mjs";
  */
 export const init = async (contentType, iv) => {
   const uuid = location.pathname.slice(1);
-  const [k, ...hash] = location.hash.slice(1).split(/(?=[#.])/);
+  const [k, ...hash] = location.hash.slice(1).split(/(?=[:.])/);
   // only if I could work with RegEx
   const forcedLanguage = hash.find((str) => str.startsWith("."))?.slice(1);
-  const selectedLines = hash.find((str) => str.startsWith("#"))?.slice(1);
+  const selectedLines = hash.find((str) => str.startsWith(":"))?.slice(1);
   const preElement = document.createElement("pre");
   let childElement = document.createElement("code");
 

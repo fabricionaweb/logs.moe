@@ -92,14 +92,12 @@ pre > ol li::before {
 /* selected lines */
 mark {
   --lineHeight: 1.5em;
-  --padding: 1em;
   position: absolute;
   pointer-events: none;
   background: rgba(255, 255, 255, 0.05);
   width: 100%;
   min-height: var(--lineHeight);
-  max-height: calc(100% - calc(var(--padding) * 2));
-  transform: translateY(var(--padding));
+  transform: translateY(1em); /* padding-top */
   height: calc(var(--height) * var(--lineHeight));
   top: calc(var(--top) * var(--lineHeight));
 }

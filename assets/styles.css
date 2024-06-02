@@ -39,6 +39,10 @@ code {
   overflow-x: auto;
 }
 
+pre {
+  position: relative;
+}
+
 samp {
   display: inline-block;
   white-space: pre-line;
@@ -52,23 +56,6 @@ a {
 img {
   width: 100%;
   max-width: max-content;
-}
-
-/* lines count */
-pre > ol {
-  float: left;
-  padding: 1rem;
-  opacity: 0.3;
-  list-style: none;
-  text-align: right;
-}
-
-pre > ol li {
-  counter-increment: line-number;
-}
-
-pre > ol li::before {
-  content: counter(line-number);
 }
 
 /* throttle loading */
@@ -85,9 +72,40 @@ pre > ol li::before {
   }
 }
 
+/* lines count */
+pre > ol {
+  float: left;
+  padding: 1em;
+  opacity: 0.3;
+  list-style: none;
+  text-align: right;
+}
+
+pre > ol li {
+  counter-increment: line-number;
+}
+
+pre > ol li::before {
+  content: counter(line-number);
+}
+
+/* selected lines */
+mark {
+  --lineHeight: 1.5em;
+  --padding: 1em;
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.05);
+  width: 100%;
+  min-height: var(--lineHeight);
+  max-height: calc(100% - calc(var(--padding) * 2));
+  transform: translateY(var(--padding));
+  height: calc(var(--height) * var(--lineHeight));
+  top: calc(var(--top) * var(--lineHeight));
+}
+
 /* overrides to highlight.js */
 pre code.hljs {
-  padding: 1rem;
   background: transparent;
 }
 

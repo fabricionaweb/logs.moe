@@ -76,18 +76,18 @@ img {
 /* lines count */
 pre > ol {
   float: left;
-  padding: 1em;
+  padding: 1em 0;
   opacity: 0.3;
   list-style: none;
   text-align: right;
 }
 
 pre > ol li {
-  counter-increment: line-number;
+  padding: 0 1em;
 }
 
 pre > ol li::before {
-  content: counter(line-number);
+  content: attr(data-ln);
 }
 
 /* selected lines */

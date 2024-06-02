@@ -92,4 +92,7 @@ const selectLines = (preElement, selectedLines = "") => {
   markElement.style.setProperty("--height", total - start + 1)
 
   preElement.appendChild(markElement)
+
+  // scrollIntoView needs to defer
+  setTimeout(() => markElement.scrollIntoView(), 100)
 }

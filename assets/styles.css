@@ -19,6 +19,7 @@ html {
   background: var(--black);
   color: var(--white);
   font-size: 10px;
+  scroll-behavior: smooth;
 }
 
 html,

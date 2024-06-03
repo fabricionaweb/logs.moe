@@ -1,14 +1,14 @@
 node_modules/
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+pnpm*
+yarn*
 
-.env
+*.log*
 *.db*
+.env
+
 data/
+assets/dist/
 
 !.tool-versions
 !.gitkeep
-
-assets/dist/

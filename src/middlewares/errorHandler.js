@@ -11,7 +11,7 @@ export const notFound = (req, res) => {
 
 // all params here are mandatory to errorHandler
 export const errorHandler = (err, req, res, _next) => {
-  console.error({ err })
+  // console.error({ err })
   const isCurl = req.get("User-Agent").startsWith("curl")
 
   if (isCurl) {

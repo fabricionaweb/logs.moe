@@ -21,8 +21,8 @@ export const view: oak.RouterMiddleware<"/:uuid", { uuid: string }> = async (
     return
   }
 
-  // a request to "/data/:uuid" will be done on the view.ejs to get the encrypted blob
-  // it will there use "utils/decrypt.ts" to decode
+  // a request to "/data/:uuid" will happens on the view.ejs to get the encrypted blob
+  // there it will process the decryption
   ctx.response.body = await dejs.renderFileToString(
     `${VIEWS_DIR}/view.ejs`,
     value,

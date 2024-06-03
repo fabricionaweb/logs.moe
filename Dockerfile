@@ -1,4 +1,5 @@
-FROM node:20.10-alpine as base
+# deno kv doesnt on alpine/musl
+FROM node:20.10-slim as base
 ENV NODE_ENV=production NPM_CONFIG_UPDATE_NOTIFIER=false
 WORKDIR /app
 
@@ -10,7 +11,10 @@ RUN npm run build-assets
 
 FROM base as runner
 ENV npm_config_build_from_source=true
-RUN apk add --no-cache tzdata
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update && \
+    apt install -y tzdata && \
+    apt clean
 COPY package*.json ./
 RUN npm ci
 COPY --from=builder /app/assets ./assets

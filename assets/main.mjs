@@ -6,8 +6,12 @@ const parseUrl = () => {
   const [k, ...rest] = location.hash.slice(1).split(/(?=[:.])/)
   // only if I could work with RegEx
   const forcedLanguage = rest.find((str) => str.startsWith("."))?.slice(1)
-  const selectedLines = rest.find((str) => str.startsWith(":"))?.slice(1)
-    .split("-").map((i) => parseInt(i) || 0) || []
+  const selectedLines =
+    rest
+      .find((str) => str.startsWith(":"))
+      ?.slice(1)
+      .split("-")
+      .map((i) => parseInt(i) || 0) || []
 
   return { uuid, k, forcedLanguage, selectedLines }
 }
@@ -69,7 +73,7 @@ export const init = async (contentType, iv) => {
   let childElement = document.createElement("code")
 
   try {
-    const response = await fetch(`/data/${uuid}`)
+    const response = await fetch(`/data/${uuid}.bin`)
     const encrypted = await response.arrayBuffer()
     const buffer = await decrypt(iv, k, encrypted)
 

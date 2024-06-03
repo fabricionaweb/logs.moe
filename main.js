@@ -1,18 +1,19 @@
 import express from "express"
 import logger from "morgan"
-import routes from "./src/routes/index.js"
+import { ASSETS_DIR, VIEWS_DIR } from "./src/constants.js"
 import { notFound, errorHandler } from "./src/middlewares/index.js"
+import routes from "./src/routes/index.js"
 
 const app = express()
 const port = process.env.PORT
-const isProd = process.env.NODE_ENV?.startsWith("prod")
 
 app.set("view engine", "ejs")
-app.set("views", "./src/views")
+app.set("views", VIEWS_DIR)
 
+// by design morgan prints log after response
 app.use(logger(":method :url :status :response-time ms"))
 app.use("/", routes)
-app.use("/", express.static(isProd ? "./assets/dist" : "./assets"))
+app.use("/", express.static(ASSETS_DIR))
 app.use(notFound)
 app.use(errorHandler)
 

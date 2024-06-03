@@ -22,17 +22,7 @@ export const JWT_PARAMS = {
  * @return {Promise<ArrayBuffer>}
  */
 export const decrypt = async (iv, k, encrypted) => {
-  const key = await crypto.subtle.importKey(
-    "jwk",
-    { k, ...JWT_PARAMS },
-    ALGORITHM_PARAMS,
-    true,
-    KEY_USAGE,
-  )
+  const key = await crypto.subtle.importKey("jwk", { k, ...JWT_PARAMS }, ALGORITHM_PARAMS, true, KEY_USAGE)
 
-  return await crypto.subtle.decrypt(
-    { name: ALGORITHM, iv },
-    key,
-    encrypted,
-  )
+  return await crypto.subtle.decrypt({ name: ALGORITHM, iv }, key, encrypted)
 }

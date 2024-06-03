@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@deno/kv": "0.7.0",
     "ejs": "3.1.10",
     "express": "4.19.2",
     "jsdom": "24.1.0",

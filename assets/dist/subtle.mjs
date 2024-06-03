@@ -1,1 +1,0 @@
-export const KEY_USAGE=["encrypt","decrypt"],ALGORITHM="AES-GCM",ALGORITHM_PARAMS={name:ALGORITHM,length:256},JWT_PARAMS={kty:"oct",alg:"A256GCM",ext:!0},decrypt=async(t,e,r)=>{const o=await crypto.subtle.importKey("jwk",{k:e,...JWT_PARAMS},ALGORITHM_PARAMS,!0,KEY_USAGE);return await crypto.subtle.decrypt({name:ALGORITHM,iv:t},o,r)};

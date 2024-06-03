@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --env-file=.env.defaults --env-file=.env main.js",
-    "start": "node --env-file=.env.defaults --env-file=.env main.js"
+    "start": "node --env-file=.env.defaults --env-file=.env main.js",
+    "build-assets": "esbuild assets/*.mjs assets/*.css --minify --out-extension:.js=.mjs --outdir=assets/dist"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "short-unique-id": "5.2.0"
   },
   "devDependencies": {
+    "esbuild": "0.21.4",
     "nodemon": "3.1.2"
   }
 }

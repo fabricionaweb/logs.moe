@@ -2,7 +2,8 @@
   "name": "logs.moe",
   "version": "1.0.0",
   "description": "Share encrypted logs without leaving terminal.",
-  "main": "index.js",
+  "main": "main.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon --env-file=.env.defaults --env-file=.env main.js",
     "start": "node --env-file=.env.defaults --env-file=.env main.js"
@@ -11,7 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ejs": "3.1.10",
     "express": "4.19.2",
+    "jsdom": "24.1.0",
+    "morgan": "1.10.0",
     "multer": "1.4.5-lts.1"
   },
   "devDependencies": {

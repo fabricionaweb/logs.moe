@@ -31,7 +31,7 @@ body,
 code,
 pre,
 samp {
-  font: 100 1.3rem/1.5 "JetBrains Mono", monospace;
+  font: 100 1.308rem/2rem "JetBrains Mono", monospace;
 }
 
 code {
@@ -92,7 +92,7 @@ pre > ol li::before {
 
 /* selected lines */
 mark {
-  --lineHeight: 1.5em;
+  --lineHeight: 2rem;
   position: absolute;
   pointer-events: none;
   background: rgba(255, 255, 255, 0.05);

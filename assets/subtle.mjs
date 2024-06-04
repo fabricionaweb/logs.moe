@@ -5,13 +5,13 @@ export const ALGORITHM = "AES-GCM"
 /** @type {AesKeyGenParams} */
 export const ALGORITHM_PARAMS = {
   name: ALGORITHM,
-  length: 256,
+  length: 128,
 }
 
 /** @type {JsonWebKey} */
 export const JWT_PARAMS = {
   kty: "oct",
-  alg: "A256GCM",
+  alg: "A128GCM",
   ext: true,
 }
 

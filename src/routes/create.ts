@@ -1,4 +1,4 @@
-import { oak, ShortUniqueId } from "../../deps.ts"
+import { nanoid, oak } from "../../deps.ts"
 import { BASE_URL, FILES_DIR, MAX_REQUEST_SIZE } from "../constants.ts"
 import { encrypt } from "../utils/encrypt.ts"
 import { Data, kv } from "../database.ts"
@@ -36,7 +36,7 @@ export const create: oak.Middleware = async (ctx) => {
   }
 
   const { iv, k, encrypted } = await encrypt(content)
-  const uuid = new ShortUniqueId().randomUUID()
+  const uuid = nanoid(8)
 
   // save on disk (Deno.kv is limited to 64KiB)
   await Deno.mkdir(FILES_DIR, { recursive: true, mode: 0o755 })

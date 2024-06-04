@@ -18,7 +18,7 @@
 html {
   background: var(--black);
   color: var(--white);
-  font-size: 10px;
+  font-size: 16px;
   scroll-behavior: smooth;
 }
 
@@ -31,7 +31,7 @@ body,
 code,
 pre,
 samp {
-  font: 100 1.308rem/2rem "JetBrains Mono", monospace;
+  font: 100 0.8125rem/1.25rem "JetBrains Mono", monospace;
 }
 
 code {
@@ -92,15 +92,15 @@ pre > ol li::before {
 
 /* selected lines */
 mark {
-  --lineHeight: 2rem;
+  --line-height: 1.25rem;
   position: absolute;
   pointer-events: none;
   background: rgba(255, 255, 255, 0.05);
   width: 100%;
-  min-height: var(--lineHeight);
+  min-height: var(--line-height);
   transform: translateY(1em); /* padding-top */
-  height: calc(var(--height) * var(--lineHeight));
-  top: calc(var(--top) * var(--lineHeight));
+  height: calc(var(--height) * var(--line-height));
+  top: calc(var(--top) * var(--line-height));
 }
 
 /* overrides to highlight.js */

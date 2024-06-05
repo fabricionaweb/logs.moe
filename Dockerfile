@@ -16,7 +16,7 @@ COPY --from=builder /app/assets ./assets
 COPY src ./src
 COPY main.ts ./
 
-USER 1000:1000
+USER deno
 ENV PORT=3000 DATA_DIR=/data BASE_URL=https://logs.moe
 EXPOSE 3000
 VOLUME /data

@@ -6,12 +6,22 @@ document.body.addEventListener("dragleave", (event) => {
   document.body.classList.toggle("dragging", event.relatedTarget)
 })
 
-document.body.addEventListener("drop", async (event) => {
+document.body.addEventListener("dragover", (event) => {
+  event.preventDefault()
+})
+
+document.body.addEventListener("drop", (event) => {
   event.preventDefault()
   document.body.classList.remove("dragging")
-  const [file] = event.dataTransfer.files
+  create(event.dataTransfer.files[0])
+})
 
-  if (!file) {
+addEventListener("paste", (event) => {
+  create(event.clipboardData.files[0] || event.clipboardData.getData("text"))
+})
+
+const create = async (data) => {
+  if (!data) {
     return
   }
 
@@ -21,7 +31,7 @@ document.body.addEventListener("drop", async (event) => {
 
   try {
     const body = new FormData()
-    body.append("data", file)
+    body.append("data", data)
     const response = await fetch("/", { method: "POST", body })
     const url = await response.text()
 
@@ -35,8 +45,4 @@ document.body.addEventListener("drop", async (event) => {
     codeElement.textContent = "failed 💀"
     codeElement.classList.remove("loading")
   }
-})
-
-document.body.addEventListener("dragover", (event) => {
-  event.preventDefault()
-})
+}

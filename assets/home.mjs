@@ -39,7 +39,7 @@ const create = async (data) => {
       throw "error"
     }
 
-    location.assign(url)
+    location.replace(url)
   } catch (err) {
     console.error(err)
     codeElement.textContent = "failed 💀"

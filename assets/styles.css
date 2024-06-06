@@ -103,6 +103,17 @@ mark {
   top: calc(var(--top) * var(--line-height));
 }
 
+/* dragging upload */
+.dragging::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.05);
+}
+
 /* overrides to highlight.js */
 pre code.hljs {
   background: transparent;

@@ -262,6 +262,8 @@
     "https://deno.land/x/lodash@4.17.15-es/isObjectLike.js": "e45d69136695e8568c6fb3c7327f96ac1a8ff7284b1b22f26fb4654255fd0c6c",
     "https://deno.land/x/lodash@4.17.15-es/isSymbol.js": "f0dc1666c3cec2306cd4fd0f63a9a7ab1f25ed21d2db6664b1edc81bd3641a41",
     "https://deno.land/x/lodash@4.17.15-es/toString.js": "3f4c8d942944c3fe622e9fba36275b6291e834113619b266909822becfa94976",
+    "https://deno.land/x/mimetypes@v1.0.0/mod.ts": "abd1ea614b32cfa7fd50b46f6e070617696664698b8a34935dc807f3035ad408",
+    "https://deno.land/x/mimetypes@v1.0.0/src/mime.ts": "7cd7590eae6127dc1abfe710900fc749e94d5c715ffe8a148e59fe20ee21a9a5",
     "https://deno.land/x/nanoid@v3.0.0/customAlphabet.ts": "1cfd7cfd2f07ca8d78a7e7855fcc9f59abf01ef2a127484ef94328fadf940ead",
     "https://deno.land/x/nanoid@v3.0.0/customRandom.ts": "af56e19038c891a4b4ef2be931554c27579bd407ee5bbea5cb64f6ee1347cbe3",
     "https://deno.land/x/nanoid@v3.0.0/mod.ts": "3ead610e40c58d8fdca21d5da9ec661445a2b82526e19c34d05de5f90be8a1be",

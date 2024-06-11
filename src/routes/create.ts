@@ -1,4 +1,4 @@
-import { nanoid, oak } from "../../deps.ts"
+import { mime, nanoid, oak } from "../../deps.ts"
 import { BASE_URL, FILES_DIR, MAX_REQUEST_SIZE } from "../constants.ts"
 import { encrypt } from "../utils/encrypt.ts"
 import { Data, kv } from "../database.ts"
@@ -22,7 +22,7 @@ export const create: oak.Middleware = async (ctx) => {
   // receive as file
   if (field instanceof File) {
     content = await field.arrayBuffer() as Uint8Array
-    contentType = field.type
+    contentType = mime.getType(`${field.name.split(".").pop()}`) || field.type
   }
 
   // received as text

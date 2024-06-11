@@ -77,6 +77,16 @@ export const init = async (contentType, iv) => {
       childElement = Object.assign(document.createElement("img"), {
         src: URL.createObjectURL(new Blob([buffer])),
       })
+    } else if (contentType.startsWith("video/")) {
+      childElement = Object.assign(document.createElement("video"), {
+        src: URL.createObjectURL(new Blob([buffer])),
+        controls: true,
+      })
+    } else if (contentType.startsWith("audio/")) {
+      childElement = Object.assign(document.createElement("audio"), {
+        src: URL.createObjectURL(new Blob([buffer])),
+        controls: true,
+      })
     } else {
       childElement.textContent = new TextDecoder().decode(buffer) || "empty 👀"
     }

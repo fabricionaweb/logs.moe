@@ -1,14 +1,14 @@
-FROM denoland/deno:alpine-1.44.0 as base
+FROM denoland/deno:alpine-1.45.5 AS base
 ENV DENO_ENV=production
 WORKDIR /app
 COPY deno.json ./
 
-FROM base as builder
+FROM base AS builder
 RUN apk add --no-cache esbuild
 COPY assets ./assets
 RUN deno task build-assets
 
-FROM base as runner
+FROM base AS runner
 RUN apk add --no-cache tzdata
 COPY deno.lock deps.ts ./
 RUN deno task cache-deps

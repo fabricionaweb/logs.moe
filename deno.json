@@ -3,7 +3,7 @@
     "dev": "deno run --reload --watch --unstable-kv --unstable-cron --allow-net --allow-env --allow-write --allow-read main.ts",
     "start": "deno run --lock --cached-only --unstable-kv --unstable-cron --allow-net --allow-env --allow-write --allow-read main.ts",
     "build-assets": "esbuild assets/*.mjs assets/*.css --minify --out-extension:.js=.mjs --outdir=assets/dist",
-    "cache-deps": "deno cache deps.ts --lock --lock-write"
+    "cache-deps": "deno cache deps.ts --lock"
   },
   "fmt": {
     "lineWidth": 120,

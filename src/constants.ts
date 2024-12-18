@@ -1,7 +1,3 @@
-import { dotEnv } from "../deps.ts"
-
-await dotEnv.load({ export: true })
-
 export const LISTEN_PORT = `${Deno.env.get("PORT")}` // port to server listen to
 export const BASE_URL = `${Deno.env.get("BASE_URL")}` // url to print after upload
 export const DATA_DIR = `${Deno.env.get("DATA_DIR")}` // directory to save .db file

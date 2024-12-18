@@ -6,7 +6,7 @@ export const logs: oak.Middleware = async (ctx, next) => {
 
   try {
     await next()
-  } catch ({ status = oak.Status.InternalServerError, message }) {
+  } catch ({ status = oak.Status.InternalServerError, message }: any) {
     error = `${status}: ${message}`
 
     ctx.response.status = status

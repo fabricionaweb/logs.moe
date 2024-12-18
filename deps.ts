@@ -1,6 +1,5 @@
 export * as path from "jsr:@std/path"
 export * as log from "jsr:@std/log"
-export * as dotEnv from "jsr:@std/dotenv"
 export * as oak from "jsr:@oak/oak"
 export * as denoDom from "jsr:@b-fuze/deno-dom"
 export { nanoid } from "jsr:@viki/nanoid"

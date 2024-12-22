@@ -36,7 +36,7 @@ const create = async (data) => {
     const url = await response.text()
 
     if (!url || !response.ok) {
-      throw "error"
+      throw response
     }
 
     location.replace(url)

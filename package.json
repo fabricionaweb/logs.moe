@@ -1,0 +1,23 @@
+{
+  "name": "logs.moe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Share secure logs",
+  "author": "hi@fabricio.dev",
+  "license": "WTFPL",
+  "main": "main.js",
+  "type": "module",
+  "engines": {
+    "node": ">=23.5.0"
+  },
+  "packageManager": "npm@11.0.0",
+  "scripts": {
+    "dev": "node --env-file=.env --watch main.js",
+    "start": "node --env-file=.env main.js",
+    "build-assets": "esbuild ./assets/*.mjs ./assets/*.css --minify --outdir=./assets/dist --out-extension:.js=.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "esbuild": "0.24.2"
+  }
+}

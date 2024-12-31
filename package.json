@@ -12,11 +12,12 @@
   },
   "packageManager": "npm@11.0.0",
   "scripts": {
-    "dev": "node --env-file=.env --watch main.js",
-    "start": "node --env-file=.env main.js",
+    "start": "node --env-file=.env --watch main.js",
     "build-assets": "esbuild ./assets/*.mjs ./assets/*.css --minify --outdir=./assets/dist --out-extension:.js=.mjs"
   },
-  "dependencies": {},
+  "dependencies": {
+    "koa": "2.15.3"
+  },
   "devDependencies": {
     "esbuild": "0.24.2"
   }

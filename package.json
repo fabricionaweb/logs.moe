@@ -16,6 +16,7 @@
     "build-assets": "esbuild ./assets/*.mjs ./assets/*.css --minify --outdir=./assets/dist --out-extension:.js=.mjs"
   },
   "dependencies": {
+    "@koa/router": "13.0.1",
     "koa": "2.15.3"
   },
   "devDependencies": {

@@ -32,6 +32,7 @@ router.get("/:uuid{.:ext}", async (ctx, next) => {
     return await ctx.render("view", gist);
   }
 
+  ctx.set("Cache-Control", "max-age=2592000"); // 30d in seconds
   ctx.set("X-IV", gist.iv);
   ctx.body = Buffer.from(gist.cipherText);
 });

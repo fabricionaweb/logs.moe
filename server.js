@@ -8,7 +8,11 @@ import { IS_PROD, BIND, PORT, LIMIT_SIZE } from "./src/constants.js";
 const app = new Koa();
 
 // static server
-app.use(serve(IS_PROD ? "./static/dist" : "./static"));
+app.use(
+  serve(IS_PROD ? "./static/dist" : "./static", {
+    maxAge: 2592000 * 1000, // 30d in milliseconds
+  })
+);
 
 // views
 render(app, {

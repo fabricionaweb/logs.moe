@@ -8,7 +8,7 @@ yarn*
 *.db*
 
 data/
-assets/dist/
+static/dist/
 
 !.tool-versions
 !.gitkeep

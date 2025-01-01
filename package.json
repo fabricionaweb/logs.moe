@@ -12,8 +12,8 @@
   },
   "packageManager": "npm@11.0.0",
   "scripts": {
-    "start": "node --env-file=.env --watch server.js",
-    "build-assets": "esbuild ./assets/*.mjs ./assets/*.css --minify --outdir=./assets/dist --out-extension:.js=.mjs"
+    "start": "node --env-file=.env --watch-path=./static --watch-path=./src/views --watch server.js",
+    "build-static": "esbuild ./static/*.mjs ./static/*.css --minify --outdir=./static/dist --out-extension:.js=.mjs"
   },
   "dependencies": {
     "@koa/router": "13.0.1",

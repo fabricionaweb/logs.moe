@@ -13,6 +13,11 @@ db.exec(`
   );
 `);
 
+/**
+ * @param  {Uint8Array<ArrayBuffer>} iv
+ * @param  {ArrayBuffer}             cipherText
+ * @return {string}                  uuid
+ */
 export const createGist = (iv, cipherText) => {
   const uuid = nanoid(22);
 
@@ -24,6 +29,14 @@ export const createGist = (iv, cipherText) => {
   return uuid;
 };
 
+/**
+ * @typedef  {Object}                PartialGist
+ * @property {string}                iv
+ * @property {ArrayBuffer}           cipherText
+ *
+ * @param    {string}                uuid
+ * @return   {PartialGist|undefined} {iv, cipherText}
+ */
 export const getGist = (uuid) => {
   const query = db.prepare("SELECT cipherText, iv FROM gists WHERE uuid = ?");
   return query.get(uuid);

@@ -16,9 +16,9 @@ export const JWT_PARAMS = {
 };
 
 /**
- * @param  {Uint8Array}  iv
- * @param  {string}      k
- * @param  {ArrayBuffer} cipherText
+ * @param  {Uint8Array<ArrayBuffer>} iv
+ * @param  {string}                  k
+ * @param  {ArrayBuffer}             cipherText
  * @return {Promise<ArrayBuffer>}
  */
 export const decrypt = async (iv, k, cipherText) => {

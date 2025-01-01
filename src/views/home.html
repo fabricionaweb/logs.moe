@@ -1,0 +1,22 @@
+<pre><code>Share encrypted logs without leaving terminal
+
+from file
+  <samp>$ curl https://logs.moe -F data=@debug.log</samp>
+from stdin
+  <samp>$ cat debug.log | curl https://logs.moe -F data=@-</samp>
+alias (file or stdin)
+  <samp>logsmoe() { curl https://logs.moe -F data="@${1:--}"; }
+  $ logsmoe debug.log
+  $ git diff --staged | logsmoe</samp>
+
+- Only accepts form-data and field name "data"
+- Upload size limited to 20MiB
+- Anything is deleted in 7 days
+- Everything is saved encrypted
+- Decryption only happens on browser
+
+This is a personal project and nothing is collected
+
+Inspiration ....... <a href="https://x0.at" rel="noreferrer">https://x0.at</a> | <a href="https://0bin.net/faq/" rel="noreferrer">https://0bin.net/faq/</a>
+Source ........ <a href="https://github.com/fabricionaweb/logs.moe" rel="noreferrer">https://github.com/fabricionaweb/logs.moe</a></code></pre>
+<script type="module" src="/home.mjs"></script>

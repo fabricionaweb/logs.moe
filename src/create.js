@@ -1,5 +1,5 @@
-import { nanoid } from "nanoid";
 import { BASE_URL } from "./constants.js";
+import { createGist } from "./database.js";
 // keep these vars on frontend as its needed to decrypt
 import { ALGORITHM, ALGORITHM_PARAMS, KEY_USAGE } from "../static/subtle.mjs";
 
@@ -22,7 +22,7 @@ export const encrypt = async (decrypted) => {
 
 export const create = async (buffer) => {
   const { iv, k, encrypted } = await encrypt(buffer);
-  const uuid = nanoid(22);
+  const uuid = createGist(iv, encrypted);
 
   return `${BASE_URL}/${uuid}#${k}`;
 };

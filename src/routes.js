@@ -1,5 +1,6 @@
 import Router from "@koa/router";
 import { create } from "./create.js";
+import { getGists } from "./database.js";
 
 export const router = new Router();
 
@@ -16,6 +17,8 @@ router.post("/", async (ctx, next) => {
 });
 
 router.get("/", async (ctx, next) => {
+  const gists = getGists();
+  console.log(gists);
   await ctx.render("home");
 });
 

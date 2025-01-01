@@ -20,7 +20,8 @@
     "@koa/ejs": "5.1.0",
     "@koa/router": "13.0.1",
     "koa": "2.15.3",
-    "koa-static": "5.0.0"
+    "koa-static": "5.0.0",
+    "nanoid": "5.0.9"
   },
   "devDependencies": {
     "esbuild": "0.24.2"

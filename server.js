@@ -2,7 +2,7 @@ import Koa from "koa";
 import serve from "koa-static";
 import render from "@koa/ejs";
 import { bodyParser } from "@koa/bodyparser";
-import { router } from "./src/router.js";
+import { router } from "./src/routes.js";
 import { IS_PROD, BIND, PORT, LIMIT_SIZE } from "./src/constants.js";
 
 const app = new Koa();

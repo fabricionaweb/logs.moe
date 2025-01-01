@@ -70,33 +70,18 @@ const selectLines = (preElement) => {
   setTimeout(() => markElement.scrollIntoView(), 200);
 };
 
-export const init = async (contentType, iv) => {
+addEventListener("DOMContentLoaded", async () => {
   const { uuid, k, forcedLanguage } = parseUrl();
   const preElement = document.createElement("pre");
   let childElement = document.createElement("code");
 
   try {
-    const response = await fetch(`/data/${uuid}`);
-    const encrypted = await response.arrayBuffer();
-    const buffer = await decrypt(iv, k, encrypted);
+    const response = await fetch(`/${uuid}.bin`);
+    const iv = new Uint8Array(response.headers.get("X-IV")?.split(","));
+    const cipherText = await response.arrayBuffer();
+    const buffer = await decrypt(iv, k, cipherText);
 
-    if (contentType.startsWith("image/")) {
-      childElement = Object.assign(document.createElement("img"), {
-        src: URL.createObjectURL(new Blob([buffer])),
-      });
-    } else if (contentType.startsWith("video/")) {
-      childElement = Object.assign(document.createElement("video"), {
-        src: URL.createObjectURL(new Blob([buffer])),
-        controls: true,
-      });
-    } else if (contentType.startsWith("audio/")) {
-      childElement = Object.assign(document.createElement("audio"), {
-        src: URL.createObjectURL(new Blob([buffer])),
-        controls: true,
-      });
-    } else {
-      childElement.textContent = new TextDecoder().decode(buffer) || "empty 👀";
-    }
+    childElement.textContent = new TextDecoder().decode(buffer) || "empty 👀";
   } catch (err) {
     console.error(err);
     childElement.textContent = "failed 💀";
@@ -105,10 +90,6 @@ export const init = async (contentType, iv) => {
     preElement.appendChild(childElement);
     document.body.innerHTML = "";
     document.body.appendChild(preElement);
-  }
-
-  if (childElement.tagName.toLowerCase() !== "code") {
-    return;
   }
 
   if (forcedLanguage) {
@@ -123,4 +104,4 @@ export const init = async (contentType, iv) => {
   addLineNumbers(preElement);
   selectLines(preElement);
   addEventListener("hashchange", () => selectLines(preElement));
-};
+});

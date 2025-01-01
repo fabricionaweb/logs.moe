@@ -11,18 +11,18 @@ export const encrypt = async (decrypted) => {
     KEY_USAGE
   );
   const { k } = await crypto.subtle.exportKey("jwk", key);
-  const ciphertext = await crypto.subtle.encrypt(
+  const cipherText = await crypto.subtle.encrypt(
     { name: ALGORITHM, iv },
     key,
     decrypted
   );
 
-  return { iv, k, ciphertext };
+  return { iv, k, cipherText };
 };
 
 export const create = async (buffer) => {
-  const { iv, k, ciphertext } = await encrypt(buffer);
-  const uuid = createGist(iv, ciphertext);
+  const { iv, k, cipherText } = await encrypt(buffer);
+  const uuid = createGist(iv, cipherText);
 
   return { uuid, k };
 };

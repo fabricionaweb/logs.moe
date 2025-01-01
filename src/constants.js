@@ -1,6 +1,7 @@
 export const PORT = process.env.PORT;
 export const BIND = process.env.BIND;
 export const BASE_URL = process.env.BASE_URL;
+export const DB_PATH = process.env.DB_PATH;
 
 export const IS_PROD = process.env.NODE_ENV?.startsWith("prod");
 

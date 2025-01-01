@@ -18,10 +18,10 @@ export const JWT_PARAMS = {
 /**
  * @param  {Uint8Array}  iv
  * @param  {string}      k
- * @param  {ArrayBuffer} ciphertext
+ * @param  {ArrayBuffer} cipherText
  * @return {Promise<ArrayBuffer>}
  */
-export const decrypt = async (iv, k, ciphertext) => {
+export const decrypt = async (iv, k, cipherText) => {
   const key = await crypto.subtle.importKey(
     "jwk",
     { k, ...JWT_PARAMS },
@@ -30,5 +30,5 @@ export const decrypt = async (iv, k, ciphertext) => {
     KEY_USAGE
   );
 
-  return await crypto.subtle.decrypt({ name: ALGORITHM, iv }, key, ciphertext);
+  return await crypto.subtle.decrypt({ name: ALGORITHM, iv }, key, cipherText);
 };

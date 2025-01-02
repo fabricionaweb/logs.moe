@@ -76,7 +76,11 @@ addEventListener("DOMContentLoaded", async () => {
   let childElement = document.createElement("code");
 
   try {
-    const response = await fetch(`/${uuid}.bin`);
+    const response = await fetch(`/${uuid}`, {
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    });
     const iv = new Uint8Array(response.headers.get("X-IV")?.split(","));
     const cipherText = await response.arrayBuffer();
     const buffer = await decrypt(iv, k, cipherText);

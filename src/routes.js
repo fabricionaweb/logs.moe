@@ -21,14 +21,14 @@ router.get("/", async (ctx) => {
   await ctx.render("home", { BASE_URL });
 });
 
-router.get("/:uuid{.:ext}", async (ctx, next) => {
+router.get("/:uuid", async (ctx, next) => {
   const gist = getGist(ctx.params.uuid);
 
   if (!gist) {
     return next();
   }
 
-  if (ctx.params.ext !== "bin") {
+  if (ctx.get("x-requested-with") !== "XMLHttpRequest") {
     return await ctx.render("view", gist);
   }
 

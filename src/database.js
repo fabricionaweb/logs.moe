@@ -2,7 +2,7 @@ import { DatabaseSync } from "node:sqlite";
 import { nanoid } from "nanoid";
 import { DB_PATH } from "./constants.js";
 
-const db = new DatabaseSync(DB_PATH ? DB_PATH : ":memory:");
+const db = new DatabaseSync(DB_PATH || ":memory:");
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS gists (

@@ -10,10 +10,10 @@ RUN npm run build-static
 
 FROM base AS runner
 RUN apk add --no-cache tzdata tini
+RUN npm ci
 COPY --from=builder /app/static/dist ./static
 COPY src ./src
 COPY server.js ./
-RUN npm ci
 
 USER node
 ENV PORT=3000 BIND=0.0.0.0

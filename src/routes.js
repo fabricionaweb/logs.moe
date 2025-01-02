@@ -31,7 +31,6 @@ router.get("/:uuid", async (ctx, next) => {
     return next();
   }
 
-  ctx.set("Cache-Control", "max-age=2592000"); // 30d in seconds
   ctx.set("X-IV", gist.iv);
   ctx.body = Buffer.from(gist.cipherText);
 });

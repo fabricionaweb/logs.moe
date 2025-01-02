@@ -18,7 +18,7 @@ router.post("/", async (ctx) => {
 });
 
 router.get("/", async (ctx) => {
-  await ctx.render("home");
+  await ctx.render("home", { BASE_URL });
 });
 
 router.get("/:uuid{.:ext}", async (ctx, next) => {

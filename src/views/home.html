@@ -1,22 +1,32 @@
-<pre><code>Share encrypted logs without leaving terminal
+<pre><code>logsmoe(1)                       logs.moe                       logsmoe(1)
 
-from file
-  <samp>$ curl https://logs.moe -F data=@debug.log</samp>
-from stdin
-  <samp>$ cat debug.log | curl https://logs.moe -F data=@-</samp>
-alias (file or stdin)
-  <samp>logsmoe() { curl https://logs.moe -F data="@${1:--}"; }
-  $ logsmoe debug.log
-  $ git diff --staged | logsmoe</samp>
+NAME
+    share secure logs from the command line
 
-- Only accepts form-data and field name "data"
-- Upload size limited to 20MiB
-- Anything is deleted in 7 days
-- Everything is saved encrypted
-- Decryption only happens on browser
+SYNOPSIS
+    <samp>$ curl <%- BASE_URL %> --data-binary 'hello world'</samp>
+    you can also paste or drag content on this page
 
-This is a personal project and nothing is collected
+DESCRIPTION
+    append the extension to force highlight if auto-detect fails and refresh:
+        <%- BASE_URL %>/abc#def.js
+        <%- BASE_URL %>/abc#def.txt
+    works better with text content
+    limited to 20MiB
+    everything encrypted
+    decryption on browser
+    no data collected
 
-Inspiration ....... <a href="https://x0.at" rel="noreferrer">https://x0.at</a> | <a href="https://0bin.net/faq/" rel="noreferrer">https://0bin.net/faq/</a>
-Source ........ <a href="https://github.com/fabricionaweb/logs.moe" rel="noreferrer">https://github.com/fabricionaweb/logs.moe</a></code></pre>
+EXAMPLES
+    <samp>$ curl <%- BASE_URL %> --data-binary @debug.log</samp>
+    <samp>$ git diff --staged | curl <%- BASE_URL %> --data-binary @-</samp>
+    add to your .profile
+    <samp>$ logsmoe() { curl <%- BASE_URL %> --data-binary "@${1:--}"; }</samp>
+    use with file or stdin
+    <samp>$ logsmoe debug.log</samp>
+    <samp>$ git diff --staged | logsmoe</samp>
+
+SEE ALSO
+    <a href="https://github.com/fabricionaweb/logs.moe" rel="noreferrer">https://github.com/fabricionaweb/logs.moe</a>
+
 <script type="module" src="/home.mjs"></script>

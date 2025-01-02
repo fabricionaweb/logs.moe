@@ -1,8 +1,8 @@
 :root {
-  --black: #282935;
-  --white: #abb2bf;
-  --blue: #61aeee;
-  --grey: #5c6370;
+  --black: hsl(235, 15%, 18%);
+  --white: hsl(220, 13%, 70%);
+  --pink: hsl(300, 80%, 65%);
+  --grey: hsl(220, 6%, 50%);
 }
 
 *,
@@ -49,7 +49,7 @@ samp {
 }
 
 a {
-  color: var(--blue);
+  color: var(--pink);
 }
 
 img,

@@ -1,22 +1,24 @@
+#!/usr/bin/env node
 import Koa from "koa";
 import serve from "koa-static";
 import render from "@koa/ejs";
 import { bodyParser } from "@koa/bodyparser";
 import { router } from "./src/routes.js";
-import { IS_PROD, BIND, PORT, LIMIT_SIZE } from "./src/constants.js";
+import { BIND, PORT, LIMIT_SIZE } from "./src/constants.js";
 
 const app = new Koa();
+const { dirname } = import.meta;
 
 // static server
 app.use(
-  serve(IS_PROD ? "./static/dist" : "./static", {
+  serve(`${dirname}/static`, {
     maxAge: 2592000 * 1000, // 30d in milliseconds
   })
 );
 
 // views
 render(app, {
-  root: "./src/views",
+  root: `${dirname}/src/views`,
   layout: "_layout",
 });
 

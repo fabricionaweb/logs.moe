@@ -3,17 +3,11 @@ import { decrypt } from "./subtle.mjs";
 
 const parseUrl = () => {
   const uuid = location.pathname.slice(1);
-  const [k, ...rest] = location.hash.slice(1).split(/(?=[:.])/);
-  // only if I could work with RegEx
-  const forcedLanguage = rest.find((str) => str.startsWith("."))?.slice(1);
-  const selectedLines =
-    rest
-      .find((str) => str.startsWith(":"))
-      ?.slice(1)
-      .split("-")
-      .map((i) => parseInt(i) || 0) || [];
+  const [, k, ext, from, to] = location.hash.match(
+    /([\w\-_]{22})\.?(\w+)?:?(\d+)?-?(\d+)?/
+  );
 
-  return { uuid, k, forcedLanguage, selectedLines };
+  return { uuid, k, ext, lines: [from, to] };
 };
 
 const addLineNumbers = (preElement) => {
@@ -30,8 +24,8 @@ const addLineNumbers = (preElement) => {
 
   listElement.addEventListener("click", ({ target, shiftKey }) => {
     const clicked = parseInt(target.dataset.ln);
-    const { k, forcedLanguage, selectedLines } = parseUrl();
-    let [from, to = from] = selectedLines;
+    const { k, ext, lines } = parseUrl();
+    let [from, to = from] = lines;
 
     if (!clicked) {
       return;
@@ -44,7 +38,7 @@ const addLineNumbers = (preElement) => {
       to = clicked;
     }
 
-    location.hash = `${k}${forcedLanguage ? `.${forcedLanguage}` : ""}:${
+    location.hash = `${k}${ext ? `.${ext}` : ""}:${
       shiftKey && from ? `${from}-${to}` : clicked
     }`;
   });
@@ -53,7 +47,7 @@ const addLineNumbers = (preElement) => {
 };
 
 const selectLines = (preElement) => {
-  const [start, total = start] = parseUrl().selectedLines;
+  const [start, total = start] = parseUrl().lines;
 
   if (!start) {
     return;
@@ -74,7 +68,7 @@ addEventListener("DOMContentLoaded", async () => {
   // delete noscript tag
   document.querySelector("noscript").remove();
 
-  const { uuid, k, forcedLanguage } = parseUrl();
+  const { uuid, k, ext } = parseUrl();
   const preElement = document.createElement("pre");
   let childElement = document.createElement("code");
 
@@ -100,8 +94,8 @@ addEventListener("DOMContentLoaded", async () => {
     document.body.appendChild(preElement);
   }
 
-  if (forcedLanguage) {
-    hljs.configure({ languages: [forcedLanguage] });
+  if (ext) {
+    hljs.configure({ languages: [ext] });
   }
 
   // do not call highlight.js if contents is too big

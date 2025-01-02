@@ -2,7 +2,7 @@
   "name": "logs.moe",
   "version": "1.0.0",
   "private": true,
-  "description": "Share secure logs",
+  "description": "Share secure logs from the command line",
   "author": "hi@fabricio.dev",
   "license": "WTFPL",
   "main": "server.js",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@koa/bodyparser": "5.1.1",
     "@koa/ejs": "5.1.0",
-    "@koa/router": "13.0.1",
+    "@koa/router": "13.1.0",
     "koa": "2.15.3",
     "koa-static": "5.0.0",
     "nanoid": "5.0.9"

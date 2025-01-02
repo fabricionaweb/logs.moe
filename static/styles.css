@@ -32,13 +32,15 @@ samp {
   font: 100 0.8125rem/1.25rem "JetBrains Mono", monospace;
 }
 
-code {
+code,
+noscript {
   display: block;
   padding: 1em;
   overflow-x: auto;
 }
 
 pre {
+  /* to position line numbers */
   position: relative;
 }
 
@@ -63,6 +65,11 @@ video {
 video {
   max-height: 100vh;
   max-height: 100dvh;
+}
+
+/* noscript hides loading */
+noscript + pre {
+  display: none;
 }
 
 /* throttle loading */

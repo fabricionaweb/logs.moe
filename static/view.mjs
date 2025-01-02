@@ -71,6 +71,9 @@ const selectLines = (preElement) => {
 };
 
 addEventListener("DOMContentLoaded", async () => {
+  // delete noscript tag
+  document.querySelector("noscript").remove();
+
   const { uuid, k, forcedLanguage } = parseUrl();
   const preElement = document.createElement("pre");
   let childElement = document.createElement("code");

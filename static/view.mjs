@@ -84,6 +84,11 @@ addEventListener("DOMContentLoaded", async () => {
         "X-Requested-With": "XMLHttpRequest",
       },
     });
+
+    if (!response.ok) {
+      throw response.status;
+    }
+
     const iv = new Uint8Array(response.headers.get("X-IV")?.split(","));
     const cipherText = await response.arrayBuffer();
     const buffer = await decrypt(iv, k, cipherText);
@@ -91,7 +96,8 @@ addEventListener("DOMContentLoaded", async () => {
     childElement.textContent = new TextDecoder().decode(buffer) || "empty 👀";
   } catch (err) {
     console.error(err);
-    childElement.textContent = "failed 💀";
+    const mappedMessages = new Map([[404, "not found 🙈"]]);
+    childElement.textContent = mappedMessages.get(err) || "failed 💀";
     return;
   } finally {
     preElement.appendChild(childElement);

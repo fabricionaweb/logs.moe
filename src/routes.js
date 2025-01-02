@@ -22,14 +22,13 @@ router.get("/", async (ctx) => {
 });
 
 router.get("/:uuid", async (ctx, next) => {
-  const gist = getGist(ctx.params.uuid);
-
-  if (!gist) {
-    return next();
+  if (ctx.get("x-requested-with") !== "XMLHttpRequest") {
+    return await ctx.render("view");
   }
 
-  if (ctx.get("x-requested-with") !== "XMLHttpRequest") {
-    return await ctx.render("view", gist);
+  const gist = getGist(ctx.params.uuid);
+  if (!gist) {
+    return next();
   }
 
   ctx.set("Cache-Control", "max-age=2592000"); // 30d in seconds

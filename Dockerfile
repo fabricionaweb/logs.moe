@@ -1,24 +1,28 @@
-FROM denoland/deno:alpine-2.1.4 AS base
-ENV DENO_ENV=production
+FROM public.ecr.aws/docker/library/node:23.5.0-alpine AS base
+ENV NODE_ENV=production
 WORKDIR /app
-COPY deno.json ./
+COPY package*.json ./
 
 FROM base AS builder
 RUN apk add --no-cache esbuild
-COPY assets ./assets
-RUN deno task build-assets
+COPY static ./static
+RUN npm run build-static
 
 FROM base AS runner
-RUN apk add --no-cache tzdata
-COPY deno.lock deps.ts ./
-RUN deno task cache-deps
-COPY --from=builder /app/assets ./assets
+RUN apk add --no-cache tzdata tini
+COPY --from=builder /app/static/dist ./static
 COPY src ./src
-COPY main.ts ./
+COPY server.js ./
+RUN npm ci
 
-USER deno
-ENV PORT=3000 DATA_DIR=/data BASE_URL=https://logs.moe
+USER node
+ENV PORT=3000 BIND=0.0.0.0
+ENV DB_PATH=/data/gists.db
+ENV BASE_URL=https://logs.moe
+
 EXPOSE 3000
+WORKDIR /data
 VOLUME /data
 
-CMD ["deno", "task", "start"]
+CMD ["/app/server.js"]
+ENTRYPOINT ["/sbin/tini", "--"]

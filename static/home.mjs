@@ -20,8 +20,8 @@ addEventListener("paste", (event) => {
   create(event.clipboardData.files[0] || event.clipboardData.getData("text"));
 });
 
-const create = async (data) => {
-  if (!data) {
+const create = async (content) => {
+  if (!content) {
     return;
   }
 
@@ -30,9 +30,13 @@ const create = async (data) => {
   codeElement.classList.add("loading");
 
   try {
-    const body = new FormData();
-    body.append("data", data);
-    const response = await fetch("/", { method: "POST", body });
+    const response = await fetch("/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: content,
+    });
     const url = await response.text();
 
     if (!url || !response.ok) {

@@ -79,12 +79,7 @@ addEventListener("DOMContentLoaded", async () => {
   let childElement = document.createElement("code");
 
   try {
-    const response = await fetch(`/${uuid}`, {
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-      },
-    });
-
+    const response = await fetch(`/data/${uuid}`);
     if (!response.ok) {
       throw response.status;
     }

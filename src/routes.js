@@ -9,16 +9,17 @@ router.get("/", async (ctx) => {
   await ctx.render("home", { BASE_URL });
 });
 
-router.get("/:uuid", async (ctx, next) => {
-  if (ctx.get("x-requested-with") !== "XMLHttpRequest") {
-    return await ctx.render("view");
-  }
+router.get("/:uuid", async (ctx) => {
+  await ctx.render("view");
+});
 
+router.get("/data/:uuid", async (ctx, next) => {
   const gist = getGist(ctx.params.uuid);
   if (!gist) {
     return next();
   }
 
+  ctx.set("Cache-Control", "max-age=2592000"); // 30d
   ctx.set("X-IV", gist.iv);
   ctx.body = Buffer.from(gist.cipherText);
 });

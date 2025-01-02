@@ -20,8 +20,12 @@ addEventListener("paste", (event) => {
   create(event.clipboardData.files[0] || event.clipboardData.getData("text"));
 });
 
-const create = async (content) => {
-  if (!content) {
+/**
+ * @param  {File|string} data
+ * @return {Promise<never>}
+ */
+const create = async (data) => {
+  if (!data) {
     return;
   }
 
@@ -35,7 +39,7 @@ const create = async (content) => {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: content,
+      body: data,
     });
     const url = await response.text();
 

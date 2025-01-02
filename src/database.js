@@ -9,7 +9,7 @@ db.exec(`
     uuid TEXT PRIMARY KEY,
     iv TEXT NOT NULL,
     cipherText BLOB NOT NULL,
-    createAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 `);
 
@@ -18,7 +18,7 @@ db.exec(`
  * @param  {ArrayBuffer}             cipherText
  * @return {string}                  uuid
  */
-export const createGist = (iv, cipherText) => {
+export const addGist = (iv, cipherText) => {
   const uuid = nanoid(22);
 
   const query = db.prepare(

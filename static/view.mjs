@@ -3,9 +3,8 @@ import { decrypt } from "./subtle.mjs";
 
 const parseUrl = () => {
   const uuid = location.pathname.slice(1);
-  const [, k, ext, from, to] = location.hash.match(
-    /([\w\-_]{22})\.?(\w+)?:?(\d+)?-?(\d+)?/
-  );
+  const [, k, ext, from, to] =
+    location.hash.match(/([\w\-_]{22})\.?(\w+)?:?(\d+)?-?(\d+)?/) || [];
 
   return { uuid, k, ext, lines: [from, to] };
 };
@@ -24,13 +23,12 @@ const addLineNumbers = (preElement) => {
 
   listElement.addEventListener("click", ({ target, shiftKey }) => {
     const clicked = parseInt(target.dataset.ln);
-    const { k, ext, lines } = parseUrl();
-    let [from, to = from] = lines;
-
     if (!clicked) {
       return;
     }
 
+    const { k, ext, lines } = parseUrl();
+    let [from, to = from] = lines;
     // swap if clicking on prior lines
     if (clicked < from) {
       from = clicked;
@@ -48,7 +46,6 @@ const addLineNumbers = (preElement) => {
 
 const selectLines = (preElement) => {
   const [start, total = start] = parseUrl().lines;
-
   if (!start) {
     return;
   }
@@ -82,7 +79,7 @@ addEventListener("DOMContentLoaded", async () => {
     const cipherText = await response.arrayBuffer();
     const buffer = await decrypt(iv, k, cipherText);
 
-    childElement.textContent = new TextDecoder().decode(buffer) || "empty 👀";
+    childElement.textContent = new TextDecoder().decode(buffer);
   } catch (err) {
     console.error(err);
     const mappedMessages = new Map([[404, "not found 🙈"]]);
@@ -94,10 +91,10 @@ addEventListener("DOMContentLoaded", async () => {
     document.body.appendChild(preElement);
   }
 
+  // force highlight.js instead of detect (default)
   if (ext) {
     hljs.configure({ languages: [ext] });
   }
-
   // do not call highlight.js if contents is too big
   if (preElement.textContent.length < 1_000_000) {
     hljs.highlightAll();
@@ -105,5 +102,8 @@ addEventListener("DOMContentLoaded", async () => {
 
   addLineNumbers(preElement);
   selectLines(preElement);
-  addEventListener("hashchange", () => selectLines(preElement));
+
+  addEventListener("hashchange", () => {
+    selectLines(preElement);
+  });
 });

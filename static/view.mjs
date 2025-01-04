@@ -3,11 +3,11 @@ import { decrypt } from "./subtle.mjs";
 
 const parseUrl = () => {
   const uuid = location.pathname.slice(1);
-  const [, k, ext, from, to, raw] = location.hash.match(
-    /([\w\-_]{22})\.?(\w+)?:?(\d+)?-?(\d+)?(\/raw)?/
+  const [, k, ext, from, to] = location.hash.match(
+    /([\w\-_]{22})\.?(\w+)?:?(\d+)?-?(\d+)?/
   );
 
-  return { uuid, k, ext, raw, lines: [from, to] };
+  return { uuid, k, ext, lines: [from, to] };
 };
 
 const addLineNumbers = (preElement) => {
@@ -24,12 +24,13 @@ const addLineNumbers = (preElement) => {
 
   listElement.addEventListener("click", ({ target, shiftKey }) => {
     const clicked = parseInt(target.dataset.ln);
+    const { k, ext, lines } = parseUrl();
+    let [from, to = from] = lines;
+
     if (!clicked) {
       return;
     }
 
-    const { k, ext, lines } = parseUrl();
-    let [from, to = from] = lines;
     // swap if clicking on prior lines
     if (clicked < from) {
       from = clicked;
@@ -47,6 +48,7 @@ const addLineNumbers = (preElement) => {
 
 const selectLines = (preElement) => {
   const [start, total = start] = parseUrl().lines;
+
   if (!start) {
     return;
   }
@@ -62,20 +64,13 @@ const selectLines = (preElement) => {
   setTimeout(() => markElement.scrollIntoView(), 200);
 };
 
-const openRaw = (buffer) => {
-  if (parseUrl().raw) {
-    location.replace(URL.createObjectURL(new Blob([buffer])));
-  }
-};
-
 addEventListener("DOMContentLoaded", async () => {
   // delete noscript tag
   document.querySelector("noscript").remove();
 
-  const { uuid, k, ext, raw } = parseUrl();
+  const { uuid, k, ext } = parseUrl();
   const preElement = document.createElement("pre");
-  const childElement = document.createElement("code");
-  let buffer;
+  let childElement = document.createElement("code");
 
   try {
     const response = await fetch(`/data/${uuid}`);
@@ -85,12 +80,9 @@ addEventListener("DOMContentLoaded", async () => {
 
     const iv = new Uint8Array(response.headers.get("X-IV")?.split(","));
     const cipherText = await response.arrayBuffer();
-    buffer = await decrypt(iv, k, cipherText);
+    const buffer = await decrypt(iv, k, cipherText);
 
-    // no need to render raw, will redirect
-    if (!raw) {
-      childElement.textContent = new TextDecoder().decode(buffer);
-    }
+    childElement.textContent = new TextDecoder().decode(buffer) || "empty 👀";
   } catch (err) {
     console.error(err);
     const mappedMessages = new Map([[404, "not found 🙈"]]);
@@ -102,10 +94,10 @@ addEventListener("DOMContentLoaded", async () => {
     document.body.appendChild(preElement);
   }
 
-  // force highlight.js instead of detect (default)
   if (ext) {
     hljs.configure({ languages: [ext] });
   }
+
   // do not call highlight.js if contents is too big
   if (preElement.textContent.length < 1_000_000) {
     hljs.highlightAll();
@@ -113,10 +105,5 @@ addEventListener("DOMContentLoaded", async () => {
 
   addLineNumbers(preElement);
   selectLines(preElement);
-  openRaw(buffer);
-
-  addEventListener("hashchange", () => {
-    openRaw(buffer);
-    selectLines(preElement);
-  });
+  addEventListener("hashchange", () => selectLines(preElement));
 });

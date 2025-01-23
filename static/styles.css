@@ -1,8 +1,8 @@
 :root {
-  --black: hsl(235, 15%, 18%);
-  --white: hsl(220, 13%, 70%);
-  --pink: hsl(300, 80%, 65%);
-  --grey: hsl(220, 6%, 50%);
+  --base: hsl(232deg, 23%, 18%);
+  --subtext0: hsl(227deg, 68%, 88%);
+  --overlay0: hsl(230deg, 12%, 49%);
+  --mauve: hsl(267deg, 83%, 80%);
 }
 
 *,
@@ -14,8 +14,8 @@
 }
 
 html {
-  background: var(--black);
-  color: var(--white);
+  background: var(--base);
+  color: var(--subtext0);
   font-size: 16px;
   scroll-behavior: smooth;
 }
@@ -47,11 +47,11 @@ pre {
 samp {
   display: inline-block;
   white-space: pre-line;
-  color: var(--grey);
+  color: var(--overlay0);
 }
 
 a {
-  color: var(--pink);
+  color: var(--mauve);
   text-decoration: none;
 }
 

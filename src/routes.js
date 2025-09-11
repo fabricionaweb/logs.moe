@@ -29,7 +29,7 @@ router.post("/", async (ctx) => {
     return ctx.throw(406, "empty file");
   }
 
-  const buffer = Buffer.from(ctx.request.rawBody, "binary");
+  const buffer = Buffer.from(ctx.request.rawBody);
   const { iv, k, cipherText } = await encrypt(buffer);
   const uuid = addGist(iv, cipherText);
 

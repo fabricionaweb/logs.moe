@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/node:23.5.0-alpine AS base
+FROM public.ecr.aws/docker/library/node:24.8.0-alpine AS base
 ENV NODE_ENV=production
 WORKDIR /app
 COPY package*.json ./

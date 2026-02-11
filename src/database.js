@@ -22,7 +22,7 @@ export const addGist = (iv, cipherText) => {
   const uuid = nanoid(22);
 
   const query = db.prepare(
-    "INSERT INTO gists (uuid, iv, cipherText) VALUES (?, ?, ?)"
+    "INSERT INTO gists (uuid, iv, cipherText) VALUES (?, ?, ?)",
   );
   query.run(uuid, iv.toString(), Buffer.from(cipherText));
 

@@ -16,12 +16,12 @@
     "build-static": "esbuild ./static/*.mjs ./static/*.css --minify --outdir=./static/dist --out-extension:.js=.mjs"
   },
   "dependencies": {
-    "@koa/bodyparser": "6.0.0",
     "@koa/ejs": "5.1.0",
     "@koa/router": "15.2.0",
     "koa": "3.1.1",
     "koa-static": "5.0.0",
-    "nanoid": "5.1.6"
+    "nanoid": "5.1.6",
+    "raw-body": "3.0.2"
   },
   "devDependencies": {
     "esbuild": "0.27.2",

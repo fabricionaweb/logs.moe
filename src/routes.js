@@ -1,6 +1,7 @@
 import Router from "@koa/router";
+import getRawBody from "raw-body";
 import { getGist, addGist } from "./database.js";
-import { BASE_URL } from "./constants.js";
+import { BASE_URL, LIMIT_SIZE } from "./constants.js";
 import { encrypt } from "../static/subtle.mjs";
 
 export const router = new Router();
@@ -25,11 +26,10 @@ router.get("/data/:uuid", async (ctx, next) => {
 });
 
 router.post("/", async (ctx) => {
-  if (!ctx.request.rawBody) {
-    return ctx.throw(406, "empty file");
-  }
+  const buffer = await getRawBody(ctx.req, { limit: LIMIT_SIZE });
 
-  const buffer = Buffer.from(ctx.request.rawBody);
+  if (!buffer.length) return ctx.throw(406, "empty file");
+
   const { iv, k, cipherText } = await encrypt(buffer);
   const uuid = addGist(iv, cipherText);
 

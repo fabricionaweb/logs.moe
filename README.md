@@ -3,4 +3,4 @@
 Share secure logs from the command line.
 
 This is _yet_ another pastebin alternative. Working as side project, I want to test an idea using
-[SubtleCrypto](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) API and [node:sqlite](https://nodejs.org/api/sqlite.html#sqlite)
+[SubtleCrypto](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) API and [node:sqlite](https://nodejs.org/api/sqlite.html#sqlite) and the most of native apis I can. _Currently zero dependency in production_.

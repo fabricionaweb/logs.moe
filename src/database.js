@@ -1,5 +1,5 @@
 import { DatabaseSync } from "node:sqlite";
-import { nanoid } from "nanoid";
+import { randomBytes } from "node:crypto";
 import { DB_PATH } from "./constants.js";
 
 const db = new DatabaseSync(DB_PATH || ":memory:");
@@ -19,7 +19,7 @@ db.exec(`
  * @return {string}                  uuid
  */
 export const addGist = (iv, cipherText) => {
-  const uuid = nanoid(22);
+  const uuid = randomBytes(16).toString("base64url"); // 22 length
   const query = db.prepare(
     "INSERT INTO gists (uuid, iv, cipherText) VALUES (?, ?, ?)",
   );

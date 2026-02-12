@@ -21,7 +21,6 @@ ENV DB_PATH=/data/gists.db
 ENV BASE_URL=https://logs.moe
 
 EXPOSE 3000
-WORKDIR /data
 VOLUME /data
 
 CMD ["/app/server.js"]

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import http from "node:http";
 import fs from "node:fs/promises";
-import getRawBody from "raw-body";
+import { buffer } from "node:stream/consumers";
 import { encrypt } from "./static/subtle.mjs";
 import { getGist, addGist } from "./src/database.js";
 import { PORT, BIND, BASE_URL, LIMIT_SIZE } from "./src/constants.js";
@@ -60,10 +60,12 @@ const gistData = async (_req, res, match) => {
 };
 
 const createGist = async (req, res) => {
-  const buffer = await getRawBody(req, { limit: LIMIT_SIZE });
-  if (!buffer.length) throw { code: 406, message: "empty file" };
+  const requestSize = parseInt(req.headers["content-length"]);
+  if (isNaN(requestSize) || requestSize > LIMIT_SIZE) throw { code: 413, message: "too large" };
+  if (requestSize === 0) throw { code: 406, message: "empty file" };
 
-  const { iv, k, cipherText } = await encrypt(buffer);
+  const body = await buffer(req);
+  const { iv, k, cipherText } = await encrypt(body);
   const uuid = addGist(iv, cipherText);
 
   res.statusCode = 201;

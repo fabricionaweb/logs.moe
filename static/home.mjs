@@ -34,12 +34,14 @@ const create = async (data) => {
   codeElement.classList.add("loading");
 
   try {
+    const body =
+      data instanceof File
+        ? await data.arrayBuffer()
+        : new TextEncoder().encode(data);
+
     const response = await fetch("/", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: data,
+      body,
     });
     const url = await response.text();
 

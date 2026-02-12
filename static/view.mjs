@@ -61,6 +61,24 @@ const selectLines = (preElement) => {
   setTimeout(() => markElement.scrollIntoView(), 200);
 };
 
+const detectContentType = (buffer) => {
+  // Magic bytes for common image formats (https://en.wikipedia.org/wiki/Magic_number_(programming))
+  const signatures = [
+    { mime: "image/png", bytes: [0x89, 0x50, 0x4e, 0x47] },
+    { mime: "image/jpeg", bytes: [0xff, 0xd8, 0xff] },
+    { mime: "image/gif", bytes: [0x47, 0x49, 0x46, 0x38] },
+    { mime: "image/webp", bytes: [0x52, 0x49, 0x46, 0x46] },
+  ];
+
+  const view = new Uint8Array(buffer);
+  for (const { mime, bytes } of signatures) {
+    if (view.length < bytes.length) continue;
+    if (bytes.every((b, i) => view[i] === b)) return mime;
+  }
+
+  return "text/plain";
+};
+
 addEventListener("DOMContentLoaded", async () => {
   // delete noscript tag
   document.querySelector("noscript").remove();
@@ -78,8 +96,29 @@ addEventListener("DOMContentLoaded", async () => {
     const iv = new Uint8Array(response.headers.get("X-IV")?.split(","));
     const cipherText = await response.arrayBuffer();
     const buffer = await decrypt(iv, k, cipherText);
+    const type = detectContentType(buffer);
 
-    childElement.textContent = new TextDecoder().decode(buffer);
+    if (type.startsWith("image/")) {
+      preElement.classList.add("center");
+      const blob = new Blob([buffer], { type });
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(blob);
+      img.addEventListener("load", () => {
+        // Check if image is larger than its displayed size (needs zoom)
+        if (
+          img.naturalWidth > img.clientWidth ||
+          img.naturalHeight > img.clientHeight
+        ) {
+          preElement.classList.add("can-zoom");
+          img.addEventListener("click", () =>
+            preElement.classList.toggle("zoomed"),
+          );
+        }
+      });
+      childElement = img;
+    } else {
+      childElement.textContent = new TextDecoder().decode(buffer);
+    }
   } catch (err) {
     console.error(err);
     const mappedMessages = new Map([[404, "not found 🙈"]]);
@@ -90,6 +129,9 @@ addEventListener("DOMContentLoaded", async () => {
     document.body.innerHTML = "";
     document.body.appendChild(preElement);
   }
+
+  // Skip highlighting for images
+  if (childElement.tagName === "IMG") return;
 
   // force highlight.js instead of detect (default)
   if (ext) {

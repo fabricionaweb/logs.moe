@@ -29,7 +29,9 @@ body,
 code,
 pre,
 samp {
-  font: 100 0.8125rem/1.25rem "JetBrains Mono", monospace;
+  font:
+    100 0.8125rem/1.25rem "JetBrains Mono",
+    monospace;
 }
 
 code,
@@ -44,6 +46,14 @@ pre {
   position: relative;
 }
 
+pre.center {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 1em;
+}
+
 samp {
   display: inline-block;
   white-space: pre-line;
@@ -55,17 +65,31 @@ a {
   text-decoration: none;
 }
 
-img,
-video {
+img {
   display: block;
   margin: auto;
   width: 100%;
   max-width: fit-content;
+  object-fit: contain;
+  max-height: calc(100vh - 2em);
+  max-height: calc(100dvh - 2em);
 }
 
-video {
-  max-height: 100vh;
-  max-height: 100dvh;
+/* Image zoom on click */
+pre.can-zoom img {
+  cursor: zoom-in;
+}
+
+pre.zoomed img {
+  cursor: zoom-out;
+  width: auto;
+  max-width: none;
+  max-height: none;
+}
+
+pre.zoomed {
+  overflow: auto;
+  place-content: safe center;
 }
 
 /* noscript hides loading */

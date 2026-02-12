@@ -25,9 +25,7 @@ addEventListener("paste", (event) => {
  * @return {Promise<never>}
  */
 const create = async (data) => {
-  if (!data) {
-    return;
-  }
+  if (!data) return;
 
   const codeElement = document.querySelector("pre code");
   codeElement.textContent = "still sending 🚀";
@@ -45,9 +43,7 @@ const create = async (data) => {
     });
     const url = await response.text();
 
-    if (!url || !response.ok) {
-      throw response;
-    }
+    if (!url || !response.ok) throw response;
 
     location.replace(url);
   } catch (err) {

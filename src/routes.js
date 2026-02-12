@@ -16,9 +16,7 @@ router.get("/:uuid", async (ctx) => {
 
 router.get("/data/:uuid", async (ctx, next) => {
   const gist = getGist(ctx.params.uuid);
-  if (!gist) {
-    return next();
-  }
+  if (!gist) return next();
 
   ctx.set("Cache-Control", "max-age=2592000"); // 30d
   ctx.set("X-IV", gist.iv);

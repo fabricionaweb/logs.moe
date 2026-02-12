@@ -23,9 +23,7 @@ const addLineNumbers = (preElement) => {
 
   listElement.addEventListener("click", ({ target, shiftKey }) => {
     const clicked = parseInt(target.dataset.ln);
-    if (!clicked) {
-      return;
-    }
+    if (!clicked) return;
 
     const { k, ext, lines } = parseUrl();
     let [from, to = from] = lines;
@@ -46,9 +44,7 @@ const addLineNumbers = (preElement) => {
 
 const selectLines = (preElement) => {
   const [start, total = start] = parseUrl().lines;
-  if (!start) {
-    return;
-  }
+  if (!start) return;
 
   const markElement =
     document.querySelector("mark") || document.createElement("mark");
@@ -62,7 +58,7 @@ const selectLines = (preElement) => {
 };
 
 const detectContentType = (buffer) => {
-  // Magic bytes for common image formats (https://en.wikipedia.org/wiki/Magic_number_(programming))
+  // magic bytes for common image formats (https://en.wikipedia.org/wiki/Magic_number_(programming))
   const signatures = [
     { mime: "image/png", bytes: [0x89, 0x50, 0x4e, 0x47] },
     { mime: "image/jpeg", bytes: [0xff, 0xd8, 0xff] },
@@ -89,9 +85,7 @@ addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(`/data/${uuid}`);
-    if (!response.ok) {
-      throw response.status;
-    }
+    if (!response.ok) throw response.status;
 
     const iv = new Uint8Array(response.headers.get("X-IV")?.split(","));
     const cipherText = await response.arrayBuffer();
@@ -104,7 +98,7 @@ addEventListener("DOMContentLoaded", async () => {
       const img = document.createElement("img");
       img.src = URL.createObjectURL(blob);
       img.addEventListener("load", () => {
-        // Check if image is larger than its displayed size (needs zoom)
+        // check if image is larger than its displayed size (needs zoom)
         if (
           img.naturalWidth > img.clientWidth ||
           img.naturalHeight > img.clientHeight
@@ -130,17 +124,14 @@ addEventListener("DOMContentLoaded", async () => {
     document.body.appendChild(preElement);
   }
 
-  // Skip highlighting for images
+  // skip highlight.js for images
   if (childElement.tagName === "IMG") return;
 
   // force highlight.js instead of detect (default)
-  if (ext) {
-    hljs.configure({ languages: [ext] });
-  }
+  if (ext) hljs.configure({ languages: [ext] });
+
   // do not call highlight.js if contents is too big
-  if (preElement.textContent.length < 1_000_000) {
-    hljs.highlightAll();
-  }
+  if (preElement.textContent.length < 1_000_000) hljs.highlightAll();
 
   addLineNumbers(preElement);
   selectLines(preElement);

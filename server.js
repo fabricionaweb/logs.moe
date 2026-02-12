@@ -50,7 +50,7 @@ const view = async (_req, res) => {
   res.end(await render("view"));
 };
 
-const gistData = async (_req, res, match) => {
+const gistData = (_req, res, match) => {
   const gist = getGist(match.pathname.groups.uuid);
   if (!gist) throw { code: 404, message: "Not found" };
 
@@ -61,7 +61,8 @@ const gistData = async (_req, res, match) => {
 
 const createGist = async (req, res) => {
   const requestSize = parseInt(req.headers["content-length"]);
-  if (isNaN(requestSize) || requestSize > LIMIT_SIZE) throw { code: 413, message: "too large" };
+  if (isNaN(requestSize) || requestSize > LIMIT_SIZE)
+    throw { code: 413, message: "too large" };
   if (requestSize === 0) throw { code: 406, message: "empty file" };
 
   const body = await buffer(req);
@@ -98,13 +99,13 @@ const routes = [
 ];
 
 // request handler
-const handleRequest = async (req, res) => {
+const handleRequests = async (req, res) => {
   const match = routes.find(
     (route) => req.method === route.method && route.pattern.test(req.url),
   );
   if (match) {
     const route = match.pattern.exec(req.url);
-    return match.handler(req, res, route);
+    return await match.handler(req, res, route);
   }
 
   throw { code: 404, message: "Not found" };
@@ -113,7 +114,7 @@ const handleRequest = async (req, res) => {
 // server
 const server = http.createServer(async (req, res) => {
   try {
-    await handleRequest(req, res);
+    await handleRequests(req, res);
   } catch (err) {
     res.statusCode = err.code || 500;
     res.end(err.message || "Server error");

@@ -20,7 +20,6 @@ db.exec(`
  */
 export const addGist = (iv, cipherText) => {
   const uuid = nanoid(22);
-
   const query = db.prepare(
     "INSERT INTO gists (uuid, iv, cipherText) VALUES (?, ?, ?)",
   );
@@ -39,5 +38,6 @@ export const addGist = (iv, cipherText) => {
  */
 export const getGist = (uuid) => {
   const query = db.prepare("SELECT cipherText, iv FROM gists WHERE uuid = ?");
+
   return query.get(uuid);
 };

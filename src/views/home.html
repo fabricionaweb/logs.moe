@@ -4,7 +4,7 @@ NAME
     share secure logs from the command line
 
 SYNOPSIS
-    <samp>$ curl <%- BASE_URL %> --data-binary 'hello world'</samp>
+    <samp>$ curl {{BASE_URL}} --data-binary 'hello world'</samp>
     you can also paste or drag files to this page
 
 DESCRIPTION
@@ -15,10 +15,10 @@ DESCRIPTION
     no data or logs never collected
 
 EXAMPLES
-    <samp>$ curl <%- BASE_URL %> --data-binary @debug.log</samp>
-    <samp>$ git diff --staged | curl <%- BASE_URL %> --data-binary @-</samp>
+    <samp>$ curl {{BASE_URL}} --data-binary @debug.log</samp>
+    <samp>$ git diff --staged | curl {{BASE_URL}} --data-binary @-</samp>
     add to your .profile
-    <samp>$ logsmoe() { curl <%- BASE_URL %> --data-binary "@${1:--}"; }</samp>
+    <samp>$ logsmoe() { curl {{BASE_URL}} --data-binary "@${1:--}"; }</samp>
     use with file or stdin
     <samp>$ logsmoe debug.log</samp>
     <samp>$ git diff --staged | logsmoe</samp>

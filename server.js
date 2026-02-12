@@ -6,12 +6,21 @@ import { encrypt } from "./static/subtle.mjs";
 import { getGist, addGist } from "./src/database.js";
 import { PORT, BIND, BASE_URL, LIMIT_SIZE } from "./src/constants.js";
 
-// static files whitelist: url -> [file path, content type]
-const staticFiles = {
-  "/styles.css": ["./static/styles.css", "text/css"],
-  "/home.mjs": ["./static/home.mjs", "application/javascript"],
-  "/view.mjs": ["./static/view.mjs", "application/javascript"],
-  "/subtle.mjs": ["./static/subtle.mjs", "application/javascript"],
+// load static files into memory at startup
+const staticCache = {
+  "styles.css": [await fs.readFile("./static/styles.css"), "text/css"],
+  "home.mjs": [
+    await fs.readFile("./static/home.mjs"),
+    "application/javascript",
+  ],
+  "view.mjs": [
+    await fs.readFile("./static/view.mjs"),
+    "application/javascript",
+  ],
+  "subtle.mjs": [
+    await fs.readFile("./static/subtle.mjs"),
+    "application/javascript",
+  ],
 };
 
 // simple template engine
@@ -22,6 +31,15 @@ const render = async (template) => {
 };
 
 // route handlers
+const serveStatic = (_req, res, match) => {
+  const [contents, type] = staticCache[match.pathname.groups.file] || [];
+  if (!contents) throw { code: 404, message: "Not found" };
+
+  res.setHeader("Content-Type", type);
+  res.setHeader("Cache-Control", "max-age=2592000");
+  res.end(contents);
+};
+
 const home = async (_req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.end(await render("home"));
@@ -52,9 +70,14 @@ const createGist = async (req, res) => {
   res.end(`${BASE_URL}/${uuid}#${k}`);
 };
 
-// routes using URLPattern (the order is relevant)
+// routes using URLPattern (the order can be relevant for matching)
 const routes = [
   { method: "GET", pattern: new URLPattern({ pathname: "/" }), handler: home },
+  {
+    method: "GET",
+    pattern: new URLPattern({ pathname: "/static/:file" }),
+    handler: serveStatic,
+  },
   {
     method: "GET",
     pattern: new URLPattern({ pathname: "/data/:uuid" }),
@@ -74,23 +97,12 @@ const routes = [
 
 // request handler
 const handleRequest = async (req, res) => {
-  // static files
-  const [filepath, type] = staticFiles[req.url] || [];
-  if (filepath) {
-    const content = await fs.readFile(filepath);
-    res.setHeader("Content-Type", type);
-    res.setHeader("Cache-Control", "max-age=2592000");
-    res.end(content);
-    return;
-  }
-
-  // routes
   const match = routes.find(
     (route) => req.method === route.method && route.pattern.test(req.url),
   );
   if (match) {
     const route = match.pattern.exec(req.url);
-    return await match.handler(req, res, route);
+    return match.handler(req, res, route);
   }
 
   throw { code: 404, message: "Not found" };

@@ -16,6 +16,12 @@ document.body.addEventListener("drop", (event) => {
   create(event.dataTransfer.files[0]);
 });
 
+// force reload if restored from bfcache (prevents blank page after back button)
+// necessary because I rewrite document.body.innerHTML
+addEventListener("pageshow", (event) => {
+  if (event.persisted) location.reload();
+});
+
 addEventListener("paste", (event) => {
   create(event.clipboardData.files[0] || event.clipboardData.getData("text"));
 });
@@ -44,8 +50,7 @@ const create = async (data) => {
     const url = await response.text();
 
     if (!url || !response.ok) throw response;
-
-    location.replace(url);
+    location.href = url;
   } catch (err) {
     console.error(err);
     codeElement.textContent = "failed 💀";
